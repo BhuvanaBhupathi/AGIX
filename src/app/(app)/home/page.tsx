@@ -128,35 +128,6 @@ export default function HomePage() {
         </button>
       </header>
 
-      {/* ── Brand Visual Showcase Banner ────────────────────────────────── */}
-      <div className="relative overflow-hidden rounded-[28px] border border-black/[0.08] bg-[#0A0A0C] shadow-[0_12px_36px_rgba(0,0,0,0.08)] group">
-        <img
-          src="/agix-banner.jpg"
-          alt="AGIX The Creative Workspace for Brand Designers"
-          className="w-full h-44 sm:h-56 object-cover object-center opacity-90 group-hover:opacity-100 transition-all duration-700 group-hover:scale-[1.01]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-5 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
-            <div>
-              <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-purple-300/90 flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] animate-pulse" />
-                Spatial Brand Canvas
-              </p>
-              <h2 className="text-white text-base sm:text-lg font-medium tracking-tight mt-0.5">
-                Explore, test, and approve brand directions
-              </h2>
-            </div>
-            <Link
-              href="/explore"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-xs font-medium border border-white/20 transition-all duration-200 self-start sm:self-auto hover:border-purple-300/40 hover:shadow-[0_0_16px_rgba(168,85,247,0.3)]"
-            >
-              <span>Explore Inspiration</span>
-              <ArrowRight size={13} className="text-purple-300" />
-            </Link>
-          </div>
-        </div>
-      </div>
-
       {/* ── 2. Continue Working ────────────────────────────────────────── */}
       <section>
         <div className="flex items-center justify-between mb-3.5 px-1">
