@@ -5,11 +5,33 @@
 @layer base {
   :root {
     --bg-paper: #FBFBFA;
+    --color-surface: #FFFFFF;
+    --color-surface-subtle: #F6F6F4;
+    --color-surface-muted: #EFEFEA;
+    --color-surface-hover: #F3F3F0;
+    --color-border: #EBEBE7;
+    --color-border-line: #E0E0DB;
+    --color-border-dark: #D0D0CA;
     --color-ink: #191918;
     --color-ink-secondary: #6B6B66;
     --color-ink-tertiary: #969690;
-    --color-border: #EBEBE7;
-    --color-surface: #FFFFFF;
+    --color-ink-faint: #BCBCB6;
+  }
+
+  /* Dark mode palette inspired by user portfolio reference */
+  .dark {
+    --bg-paper: #08090E;
+    --color-surface: #0E1018;
+    --color-surface-subtle: #141724;
+    --color-surface-muted: #1B1F30;
+    --color-surface-hover: #161928;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-line: rgba(255, 255, 255, 0.12);
+    --color-border-dark: rgba(255, 255, 255, 0.18);
+    --color-ink: #F8FAFC;
+    --color-ink-secondary: #94A3B8;
+    --color-ink-tertiary: #64748B;
+    --color-ink-faint: #475569;
   }
 
   * {
@@ -24,6 +46,17 @@
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Celestial star-point ambience for dark mode */
+  .dark body {
+    background-color: #08090E;
+    background-image: 
+      radial-gradient(rgba(139, 92, 246, 0.07) 1px, transparent 1px),
+      radial-gradient(ellipse 70% 35% at 50% -10%, rgba(139, 92, 246, 0.14), transparent 70%);
+    background-size: 32px 32px, 100% 100%;
+    background-attachment: fixed;
   }
 
   button, input, textarea, select {
@@ -33,6 +66,11 @@
   ::selection {
     background-color: #E8E8E2;
     color: #191918;
+  }
+
+  .dark ::selection {
+    background-color: rgba(139, 92, 246, 0.4);
+    color: #FFFFFF;
   }
 }
 
@@ -50,12 +88,130 @@
     background-color: #2E2E2C !important;
     border-color: #2E2E2C;
   }
+
+  /* In dark mode, btn-primary adopts violet/cyan glow gradient matching reference Hire Me */
+  .dark .btn-primary {
+    background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #38BDF8 100%) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.35) !important;
+  }
+  .dark .btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 28px rgba(139, 92, 246, 0.5) !important;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Utility overrides for dark mode to ensure universal seamless adaptation */
+  .dark .bg-white {
+    background-color: #0E1018 !important;
+  }
+
+  .dark .bg-stone-50 {
+    background-color: #11131E !important;
+  }
+
+  .dark .bg-stone-100 {
+    background-color: #141724 !important;
+  }
+
+  .dark .bg-stone-100\/50,
+  .dark .bg-stone-100\/60,
+  .dark .bg-stone-100\/70,
+  .dark .bg-stone-100\/80 {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+  }
+
+  .dark .border-black\/\[0\.03\],
+  .dark .border-black\/\[0\.04\],
+  .dark .border-black\/\[0\.05\],
+  .dark .border-black\/\[0\.06\],
+  .dark .border-black\/\[0\.08\],
+  .dark .border-black\/\[0\.1\],
+  .dark .border-black\/10 {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .dark .text-black {
+    color: #F8FAFC !important;
+  }
+
+  .dark .text-stone-900 {
+    color: #F8FAFC !important;
+  }
+
+  .dark .text-stone-700,
+  .dark .text-stone-600,
+  .dark .text-stone-500 {
+    color: #94A3B8 !important;
+  }
+
+  .dark .text-stone-400 {
+    color: #64748B !important;
+  }
+
+  .dark .bg-purple-50,
+  .dark .bg-purple-50\/80,
+  .dark .bg-purple-50\/30 {
+    background-color: rgba(139, 92, 246, 0.12) !important;
+  }
+
+  .dark .border-purple-200\/60,
+  .dark .border-purple-100 {
+    border-color: rgba(139, 92, 246, 0.25) !important;
+  }
+
+  .dark .text-\[\#6D28D9\] {
+    color: #C4B5FD !important;
+  }
+
+  .dark .bg-\[\#EAF5F8\] {
+    background-color: rgba(56, 189, 248, 0.12) !important;
+  }
+
+  .dark .border-\[\#D0EBF2\] {
+    border-color: rgba(56, 189, 248, 0.25) !important;
+  }
+
+  .dark input,
+  .dark textarea,
+  .dark select {
+    background-color: #121422 !important;
+    color: #F8FAFC !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: #64748B !important;
+  }
+
+  .dark .shadow-card,
+  .dark .shadow-lifted,
+  .dark .shadow-subtle {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+/* Custom sleek scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #08090E;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #1E2235;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2D334D;
 }
 
 @media (prefers-reduced-motion: reduce) {

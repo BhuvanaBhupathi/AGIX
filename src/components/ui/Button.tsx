@@ -10,17 +10,17 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = "primary", size = "md", children, className = "", ...props }, ref) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium transition-all duration-150 rounded-md focus:outline-none focus-visible:ring-1 focus-visible:ring-ink disabled:opacity-50 disabled:pointer-events-none select-none cursor-pointer";
+      "inline-flex items-center justify-center font-medium transition-all duration-150 rounded-md focus:outline-none focus-visible:ring-1 focus-visible:ring-[#8B5CF6] disabled:opacity-50 disabled:pointer-events-none select-none cursor-pointer";
 
     const variantStyles = {
       primary:
         "btn-primary bg-[#191918] !text-white hover:bg-[#2C2C29] active:bg-[#121211] shadow-subtle border border-[#191918]",
       secondary:
-        "bg-[#F6F6F4] text-[#191918] border border-border-subtle hover:bg-[#EFEFEA] active:bg-[#E5E5DF]",
+        "bg-[#F6F6F4] dark:bg-[#141724] text-[#191918] dark:text-[#F8FAFC] border border-border-subtle hover:bg-[#EFEFEA] dark:hover:bg-[#1B1F30] active:bg-[#E5E5DF]",
       outline:
-        "bg-white text-[#191918] border border-border-subtle hover:bg-[#F6F6F4] hover:border-border-line",
+        "bg-white dark:bg-[#0E1018] text-[#191918] dark:text-[#F8FAFC] border border-border-subtle hover:bg-[#F6F6F4] dark:hover:bg-[#141724] hover:border-border-line dark:hover:border-white/20",
       ghost:
-        "bg-transparent text-ink-secondary hover:text-ink hover:bg-[#F6F6F4] active:bg-surface-muted",
+        "bg-transparent text-ink-secondary hover:text-ink hover:bg-[#F6F6F4] dark:hover:bg-white/[0.06] active:bg-surface-muted",
     };
 
     const sizeStyles = {

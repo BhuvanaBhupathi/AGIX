@@ -33,10 +33,10 @@ function Preview({ item }: { item: LibraryItem }) {
     const hex = content.hex ?? "#191918";
     return (
       <div
-        className="h-24 rounded-2xl border border-black/10 shadow-sm flex items-end p-2.5"
+        className="h-24 rounded-2xl border border-black/10 dark:border-white/10 shadow-sm flex items-end p-2.5"
         style={{ background: hex }}
       >
-        <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-black/40 text-white backdrop-blur-sm">
+        <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-black/50 text-white backdrop-blur-sm border border-white/10">
           {String(hex).toUpperCase()}
         </span>
       </div>
@@ -48,7 +48,7 @@ function Preview({ item }: { item: LibraryItem }) {
     const fallback = [{ hex: "#191918" }, { hex: "#5A5A55" }, { hex: "#BCBCB6" }, { hex: "#FBFBFA" }];
     const swatches = colors.length ? colors : fallback;
     return (
-      <div className="flex h-24 overflow-hidden rounded-2xl border border-black/[0.06] shadow-sm">
+      <div className="flex h-24 overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/10 shadow-sm">
         {swatches.map((color, index) => (
           <span key={index} className="flex-1 h-full" style={{ background: color.hex ?? "#191918" }} />
         ))}
@@ -59,7 +59,7 @@ function Preview({ item }: { item: LibraryItem }) {
   if (item.type === "font") {
     return (
       <div
-        className="h-24 rounded-2xl border border-black/[0.06] bg-[#F4F8FA] px-4 flex items-center text-3xl text-ink shadow-sm"
+        className="h-24 rounded-2xl border border-black/[0.06] dark:border-white/10 bg-[#F4F8FA] dark:bg-[#141724] px-4 flex items-center text-3xl text-ink shadow-sm"
         style={{ fontFamily: content.fontFamily ?? "inherit" }}
       >
         {content.previewText ?? "Aa"}
@@ -70,7 +70,7 @@ function Preview({ item }: { item: LibraryItem }) {
   const imageUrl = item.imageUrl || content.url || content.imageUrl;
   if (imageUrl) {
     return (
-      <div className="h-36 rounded-2xl overflow-hidden bg-surface-subtle border border-black/[0.06] shadow-sm relative group">
+      <div className="h-36 rounded-2xl overflow-hidden bg-surface-subtle dark:bg-[#141724] border border-black/[0.06] dark:border-white/10 shadow-sm relative group">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageUrl}
@@ -84,9 +84,9 @@ function Preview({ item }: { item: LibraryItem }) {
   }
 
   return (
-    <div className="h-24 rounded-2xl border border-black/[0.06] bg-[#F4F8FA] p-3 flex flex-col justify-between text-xs text-ink-secondary leading-relaxed shadow-sm">
+    <div className="h-24 rounded-2xl border border-black/[0.06] dark:border-white/10 bg-[#F4F8FA] dark:bg-[#141724] p-3 flex flex-col justify-between text-xs text-ink-secondary dark:text-slate-400 leading-relaxed shadow-sm">
       <p className="line-clamp-2">{content.description ?? content.note ?? item.notes ?? "Saved creative direction"}</p>
-      {content.source && <span className="text-[10px] font-mono text-ink-tertiary">{content.source}</span>}
+      {content.source && <span className="text-[10px] font-mono text-ink-tertiary dark:text-slate-500">{content.source}</span>}
     </div>
   );
 }
@@ -138,30 +138,30 @@ export default function LibraryPage() {
   return (
     <div className="relative space-y-8 max-w-6xl">
       {/* Ambient background caustics */}
-      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80" />
-      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60" />
+      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80 dark:from-[#8B5CF6]/25 dark:via-[#38BDF8]/15" />
+      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60 dark:from-[#6366F1]/20 dark:via-[#A855F7]/15" />
 
       {/* ── Header ──────────────────────────────────────────────────────── */}
-      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 pb-6 border-b border-black/[0.06]">
+      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 pb-6 border-b border-black/[0.06] dark:border-white/[0.08]">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 border border-purple-200/60 text-[11px] font-mono text-[#6D28D9] mb-3 shadow-2xs backdrop-blur-xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 dark:bg-white/[0.04] border border-purple-200/60 dark:border-white/[0.08] text-[11px] font-mono text-[#6D28D9] dark:text-[#C4B5FD] mb-3 shadow-2xs backdrop-blur-xs">
             <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
             <FolderOpen size={12} />
             <span>Design System Tokens & Assets</span>
           </div>
-          <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-ink mt-0.5">
-            Creative Library <span className="text-ink-tertiary font-normal text-2xl font-mono">({library.length})</span>
+          <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink mt-0.5">
+            Creative Library <span className="text-ink-tertiary dark:text-slate-400 font-normal text-2xl font-mono">({library.length})</span>
           </h1>
-          <p className="mt-1 text-xs sm:text-sm text-ink-secondary">
+          <p className="mt-1 text-xs sm:text-sm text-ink-secondary dark:text-slate-400">
             Your persistent collection of saved fonts, colors, palettes, and visual references.
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/explore"
-            className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] hover:from-[#2E1A47] hover:to-[#1E1130] text-white text-xs sm:text-sm font-medium transition-all duration-300 ease-out shadow-sm hover:shadow-[0_8px_24px_rgba(139,92,246,0.25)] hover:-translate-y-[1px] active:translate-y-0 border border-purple-500/25 ring-1 ring-white/10 shrink-0"
+            className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] dark:from-[#8B5CF6] dark:via-[#6366F1] dark:to-[#38BDF8] hover:from-[#2E1A47] hover:to-[#1E1130] text-white text-xs sm:text-sm font-medium transition-all duration-300 ease-out shadow-sm hover:shadow-[0_8px_24px_rgba(139,92,246,0.35)] dark:shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:-translate-y-[1px] active:translate-y-0 border border-purple-500/25 ring-1 ring-white/10 shrink-0"
           >
-            <Sparkles size={14} className="text-purple-300 transition-transform duration-300 group-hover:rotate-12" />
+            <Sparkles size={14} className="text-purple-300 dark:text-white transition-transform duration-300 group-hover:rotate-12" />
             <span>Discover Inspiration</span>
           </Link>
         </div>
@@ -169,16 +169,17 @@ export default function LibraryPage() {
 
       {/* ── Filter Bar & Search ────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-        <div className="flex gap-1.5 p-1 rounded-full bg-stone-100/80 border border-black/[0.04] w-fit overflow-x-auto backdrop-blur-xs">
+        <div className="flex gap-1.5 p-1 rounded-full bg-stone-100/80 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] w-fit overflow-x-auto backdrop-blur-xs">
           {FILTERS.map((entry) => (
             <button
               key={entry}
               type="button"
               onClick={() => setFilter(entry)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${filter === entry
-                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
-                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
-                }`}
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+                filter === entry
+                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80 dark:border-[#8B5CF6]/30"
+                  : "text-ink-secondary dark:text-slate-400 hover:text-ink dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.04]"
+              }`}
             >
               {entry}
             </button>
@@ -186,19 +187,19 @@ export default function LibraryPage() {
         </div>
 
         <div className="relative w-full sm:w-72">
-          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-tertiary" />
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-tertiary dark:text-slate-400" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search saved items..."
-            className="w-full h-10 pl-9 pr-8 rounded-full border border-black/[0.06] bg-white text-xs text-ink placeholder:text-ink-tertiary focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 focus:outline-none transition-all shadow-2xs"
+            className="w-full h-10 pl-9 pr-8 rounded-full border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#121422] text-xs text-ink dark:text-white placeholder:text-ink-tertiary dark:placeholder:text-slate-500 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 focus:outline-none transition-all shadow-2xs"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-tertiary hover:text-ink"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-tertiary hover:text-ink dark:hover:text-white"
             >
               <X size={13} />
             </button>
@@ -212,18 +213,18 @@ export default function LibraryPage() {
           {items.map((item) => (
             <article
               key={item.id}
-              className="group rounded-[26px] border border-black/[0.06] bg-white p-5 hover:border-[#8B5CF6]/30 hover:shadow-[0_14px_32px_rgba(139,92,246,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+              className="group rounded-[26px] border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0E1018]/90 p-5 hover:border-[#8B5CF6]/40 hover:shadow-[0_14px_32px_rgba(139,92,246,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] uppercase tracking-wider font-mono text-ink-secondary px-2.5 py-0.5 rounded-full bg-stone-100 border border-black/[0.03]">
+                  <span className="text-[10px] uppercase tracking-wider font-mono text-ink-secondary dark:text-slate-400 px-2.5 py-0.5 rounded-full bg-stone-100 dark:bg-white/[0.06] border border-black/[0.03] dark:border-white/[0.05]">
                     {TYPE_LABEL[item.type] || item.type}
                   </span>
                   <button
                     type="button"
                     onClick={() => removeFromLibrary(item.id)}
                     title={`Remove ${item.name}`}
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-ink-tertiary hover:text-red-600 hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100"
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-ink-tertiary hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-all opacity-0 group-hover:opacity-100"
                   >
                     <Trash2 size={13} />
                   </button>
@@ -232,22 +233,22 @@ export default function LibraryPage() {
                 <Preview item={item} />
 
                 <div className="mt-3.5">
-                  <h2 className="text-sm font-semibold text-ink truncate" title={item.name}>
+                  <h2 className="text-sm font-semibold text-ink group-hover:text-[#6D28D9] dark:group-hover:text-[#C4B5FD] transition-colors truncate" title={item.name}>
                     {item.name}
                   </h2>
-                  <p className="mt-0.5 text-[11px] font-mono text-ink-tertiary">
+                  <p className="mt-0.5 text-[11px] font-mono text-ink-tertiary dark:text-slate-400">
                     Saved {formatDate(item.savedAt)}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-black/[0.04]">
+              <div className="mt-4 pt-3 border-t border-black/[0.04] dark:border-white/[0.06]">
                 <button
                   type="button"
                   onClick={() => setItemToAdd(item)}
-                  className="w-full py-2 px-3 rounded-full border border-black/[0.06] bg-[#F8FAFC] hover:bg-[#111827] hover:text-white hover:border-transparent text-ink text-xs font-medium transition-all flex items-center justify-center gap-1.5 group/btn shadow-none hover:shadow-sm"
+                  className="w-full py-2 px-3 rounded-full border border-black/[0.06] dark:border-white/[0.08] bg-[#F8FAFC] dark:bg-white/[0.04] hover:bg-[#111827] dark:hover:bg-[#8B5CF6] hover:text-white dark:hover:text-white hover:border-transparent text-ink text-xs font-medium transition-all flex items-center justify-center gap-1.5 group/btn shadow-none hover:shadow-sm"
                 >
-                  <Plus size={13} className="text-ink group-hover/btn:text-white transition-colors" />
+                  <Plus size={13} className="text-ink dark:text-white group-hover/btn:text-white transition-colors" />
                   <span>Add to project</span>
                 </button>
               </div>
@@ -255,21 +256,21 @@ export default function LibraryPage() {
           ))}
         </div>
       ) : (
-        <div className="rounded-[28px] border border-dashed border-border-subtle bg-white/60 p-16 text-center">
-          <div className="mx-auto h-12 w-12 rounded-2xl bg-stone-100 flex items-center justify-center text-ink-tertiary mb-3 shadow-sm">
+        <div className="rounded-[28px] border border-dashed border-border-subtle bg-white/60 dark:bg-[#0E1018]/50 p-16 text-center">
+          <div className="mx-auto h-12 w-12 rounded-2xl bg-stone-100 dark:bg-white/[0.06] flex items-center justify-center text-ink-tertiary dark:text-slate-400 mb-3 shadow-sm">
             <FolderOpen size={20} />
           </div>
           <h2 className="text-sm font-semibold text-ink">
             {library.length ? "No matching saved items" : "Your creative library is waiting"}
           </h2>
-          <p className="mt-1 text-xs text-ink-secondary max-w-sm mx-auto leading-relaxed">
+          <p className="mt-1 text-xs text-ink-secondary dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
             {library.length
               ? "Try adjusting your category filter or search query."
               : "Discover inspiration in Explore or save elements from your canvas to build your persistent memory."}
           </p>
           <Link
             href="/explore"
-            className="inline-flex items-center gap-1.5 mt-4 px-4 py-2 rounded-full bg-ink text-white text-xs font-medium hover:bg-[#1E1B4B] transition-colors shadow-sm"
+            className="inline-flex items-center gap-1.5 mt-4 px-4 py-2 rounded-full bg-ink dark:bg-[#8B5CF6] text-white text-xs font-medium hover:bg-[#1E1B4B] dark:hover:bg-[#7C3AED] transition-colors shadow-sm"
           >
             <Sparkles size={13} />
             <span>Browse Explore</span>
@@ -279,60 +280,45 @@ export default function LibraryPage() {
 
       {/* ── Add to Project Modal ───────────────────────────────────────── */}
       {itemToAdd && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-fade-in"
-          onClick={() => setItemToAdd(null)}
-        >
-          <div
-            className="w-full max-w-sm rounded-[28px] border border-black/[0.06] bg-white p-5 shadow-lifted"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+          <div className="w-full max-w-md rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0E1018] p-6 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
               <div>
-                <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary">
-                  Add to Canvas
+                <h3 className="text-sm font-semibold text-ink">Place on Canvas</h3>
+                <p className="text-xs text-ink-secondary dark:text-slate-400 mt-0.5">
+                  Select a brand workspace for <strong className="text-ink">{itemToAdd.name}</strong>
                 </p>
-                <h2 className="text-sm font-semibold text-ink mt-0.5 truncate max-w-[240px]">
-                  {itemToAdd.name}
-                </h2>
               </div>
               <button
                 type="button"
                 onClick={() => setItemToAdd(null)}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-ink-tertiary hover:text-ink hover:bg-stone-100 transition-colors"
+                className="text-ink-tertiary hover:text-ink dark:hover:text-white p-1 rounded-md"
               >
-                <X size={15} />
+                <X size={16} />
               </button>
             </div>
 
-            <div className="py-3 max-h-72 overflow-y-auto space-y-1">
-              <p className="text-[11px] text-ink-tertiary font-medium px-2 mb-1.5">
-                Select target project canvas:
-              </p>
-              {projects.length ? (
-                projects.map((project) => (
-                  <button
-                    key={project.id}
-                    type="button"
-                    onClick={() => addToProject(project.id)}
-                    className="w-full text-left rounded-2xl px-3.5 py-2.5 hover:bg-[#EAF5F8] transition-colors flex items-center justify-between group"
-                  >
-                    <div>
-                      <p className="text-xs font-semibold text-ink group-hover:text-ink">
-                        {project.name}
-                      </p>
-                      <p className="text-[10px] text-ink-tertiary mt-0.5">
-                        {project.client} · {project.type}
-                      </p>
-                    </div>
-                    <Plus size={13} className="text-ink-tertiary group-hover:text-ink" />
-                  </button>
-                ))
-              ) : (
-                <p className="px-3 py-6 text-center text-xs text-ink-secondary">
-                  Create a project first before adding library items to a canvas.
-                </p>
-              )}
+            <div className="py-3 max-h-64 overflow-y-auto space-y-1">
+              {projects.map((project) => (
+                <button
+                  key={project.id}
+                  type="button"
+                  onClick={() => addToProject(project.id)}
+                  className="w-full p-3 rounded-xl flex items-center justify-between text-left hover:bg-stone-50 dark:hover:bg-white/[0.04] transition-colors border border-transparent hover:border-black/[0.04] dark:hover:border-white/[0.08]"
+                >
+                  <div>
+                    <p className="text-xs font-semibold text-ink">{project.name}</p>
+                    <p className="text-[11px] text-ink-tertiary dark:text-slate-400">{project.client} · {project.type}</p>
+                  </div>
+                  <span className="text-xs font-mono text-[#8B5CF6]">Add →</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-black/[0.06] dark:border-white/[0.08] flex justify-end">
+              <Button variant="outline" size="sm" onClick={() => setItemToAdd(null)}>
+                Cancel
+              </Button>
             </div>
           </div>
         </div>

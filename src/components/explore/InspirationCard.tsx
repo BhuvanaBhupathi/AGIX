@@ -29,20 +29,24 @@ export function InspirationCard({
       return (
         <div
           onClick={() => onOpenDetail(item)}
-          className="w-full bg-gradient-to-br from-white to-purple-50/30 border border-black/[0.06] rounded-[22px] p-5 cursor-pointer hover:border-[#8B5CF6]/40 hover:shadow-[0_14px_32px_rgba(139,92,246,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+          className="w-full bg-gradient-to-br from-white to-purple-50/30 dark:from-[#111322] dark:to-[#17192F] border border-black/[0.06] dark:border-white/[0.08] rounded-[22px] p-5 cursor-pointer hover:border-[#8B5CF6]/50 hover:shadow-[0_14px_32px_rgba(139,92,246,0.14)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
           style={{ minHeight: 180 }}
         >
           <div className="flex items-center justify-between text-xs text-ink-tertiary">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#6D28D9] bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">Typography</span>
-            <span className="text-[11px] font-medium">{item.creator}</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#6D28D9] dark:text-[#C4B5FD] bg-purple-50 dark:bg-purple-950/50 px-2 py-0.5 rounded-full border border-purple-100 dark:border-purple-500/30">
+              Typography
+            </span>
+            <span className="text-[11px] font-medium text-ink-tertiary dark:text-slate-400">{item.creator}</span>
           </div>
           <div
-            className="my-3 text-2xl font-normal text-ink leading-snug tracking-tight group-hover:text-black transition-colors"
+            className="my-3 text-2xl font-normal text-ink leading-snug tracking-tight group-hover:text-black dark:group-hover:text-white transition-colors"
             style={{ fontFamily: family }}
           >
             {sample}
           </div>
-          <div className="text-xs font-semibold text-ink group-hover:text-[#6D28D9] transition-colors">{item.title}</div>
+          <div className="text-xs font-semibold text-ink group-hover:text-[#6D28D9] dark:group-hover:text-[#C4B5FD] transition-colors">
+            {item.title}
+          </div>
         </div>
       );
     }
@@ -57,16 +61,18 @@ export function InspirationCard({
       return (
         <div
           onClick={() => onOpenDetail(item)}
-          className="w-full bg-white border border-black/[0.06] rounded-[22px] p-3.5 cursor-pointer hover:border-[#8B5CF6]/40 hover:shadow-[0_14px_32px_rgba(139,92,246,0.08)] hover:-translate-y-1 transition-all duration-300 group"
+          className="w-full bg-white dark:bg-[#0E1018]/90 border border-black/[0.06] dark:border-white/[0.08] rounded-[22px] p-3.5 cursor-pointer hover:border-[#8B5CF6]/50 hover:shadow-[0_14px_32px_rgba(139,92,246,0.14)] hover:-translate-y-1 transition-all duration-300 group"
         >
-          <div className="h-28 rounded-xl overflow-hidden flex border border-black/5 mb-3 shadow-inner">
+          <div className="h-28 rounded-xl overflow-hidden flex border border-black/5 dark:border-white/10 mb-3 shadow-inner">
             {colors.map((c, i) => (
               <div key={i} className="flex-1 h-full transition-transform duration-200 group-hover:scale-y-105" style={{ background: c.hex }} />
             ))}
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-ink group-hover:text-[#6D28D9] transition-colors">{item.title}</span>
-            <span className="text-[10px] font-mono text-ink-tertiary">{colors.length} swatches</span>
+            <span className="text-xs font-semibold text-ink group-hover:text-[#6D28D9] dark:group-hover:text-[#C4B5FD] transition-colors">
+              {item.title}
+            </span>
+            <span className="text-[10px] font-mono text-ink-tertiary dark:text-slate-400">{colors.length} swatches</span>
           </div>
         </div>
       );
@@ -77,10 +83,10 @@ export function InspirationCard({
       return (
         <div
           onClick={() => onOpenDetail(item)}
-          className="w-full bg-white border border-black/[0.06] rounded-[22px] p-3.5 cursor-pointer hover:border-[#8B5CF6]/40 hover:shadow-[0_14px_32px_rgba(139,92,246,0.08)] hover:-translate-y-1 transition-all duration-300 group"
+          className="w-full bg-white dark:bg-[#0E1018]/90 border border-black/[0.06] dark:border-white/[0.08] rounded-[22px] p-3.5 cursor-pointer hover:border-[#8B5CF6]/50 hover:shadow-[0_14px_32px_rgba(139,92,246,0.14)] hover:-translate-y-1 transition-all duration-300 group"
         >
           <div
-            className="h-32 rounded-xl border border-black/10 mb-3 flex items-end p-2.5 shadow-2xs"
+            className="h-32 rounded-xl border border-black/10 dark:border-white/10 mb-3 flex items-end p-2.5 shadow-2xs"
             style={{ background: hex }}
           >
             <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-black/50 text-white backdrop-blur-sm border border-white/10">
@@ -88,8 +94,10 @@ export function InspirationCard({
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-ink group-hover:text-[#6D28D9] transition-colors">{item.title}</span>
-            <span className="text-[10px] font-mono text-ink-tertiary">{hex}</span>
+            <span className="text-xs font-semibold text-ink group-hover:text-[#6D28D9] dark:group-hover:text-[#C4B5FD] transition-colors">
+              {item.title}
+            </span>
+            <span className="text-[10px] font-mono text-ink-tertiary dark:text-slate-400">{hex}</span>
           </div>
         </div>
       );
@@ -98,7 +106,7 @@ export function InspirationCard({
     // Default: Image / Reference
     return (
       <div
-        className="relative overflow-hidden rounded-[22px] bg-surface-subtle border border-black/[0.07] hover:border-[#8B5CF6]/45 hover:shadow-[0_16px_36px_rgba(139,92,246,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+        className="relative overflow-hidden rounded-[22px] bg-surface-subtle dark:bg-[#0E1018]/90 border border-black/[0.07] dark:border-white/[0.08] hover:border-[#8B5CF6]/50 hover:shadow-[0_16px_36px_rgba(139,92,246,0.16)] hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
         onClick={() => onOpenDetail(item)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -148,7 +156,7 @@ export function InspirationCard({
                 type="button"
                 onClick={() => onAddToCanvas(item)}
                 title="Add directly to Project Canvas"
-                className="inline-flex items-center gap-1 text-[11px] font-semibold px-3 py-1.5 rounded-full bg-white text-ink shadow-md hover:bg-stone-50 hover:scale-105 active:scale-95 transition-all"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold px-3 py-1.5 rounded-full bg-white dark:bg-white text-ink dark:text-stone-900 shadow-md hover:bg-stone-50 hover:scale-105 active:scale-95 transition-all"
               >
                 <Plus size={12} />
                 <span>Canvas</span>
@@ -195,7 +203,7 @@ export function InspirationCard({
               e.stopPropagation();
               onOpenDetail(item);
             }}
-            className="text-ink-tertiary hover:text-ink p-1 rounded transition-colors"
+            className="text-ink-tertiary hover:text-ink dark:hover:text-white p-1 rounded transition-colors"
             title="View Details"
           >
             <MoreHorizontal size={14} />

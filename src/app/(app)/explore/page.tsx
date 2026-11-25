@@ -258,35 +258,35 @@ function ExploreContent() {
   return (
     <div className="relative space-y-8 pb-16 max-w-7xl mx-auto">
       {/* Ambient background caustics */}
-      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80" />
-      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60" />
+      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80 dark:from-[#8B5CF6]/25 dark:via-[#38BDF8]/15" />
+      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60 dark:from-[#6366F1]/20 dark:via-[#A855F7]/15" />
 
       {/* ── Header Area ─────────────────────────────────────────────────── */}
-      <header className="space-y-4 pb-6 border-b border-black/[0.06]">
+      <header className="space-y-4 pb-6 border-b border-black/[0.06] dark:border-white/[0.08]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 border border-purple-200/60 text-[11px] font-mono text-[#6D28D9] mb-3 shadow-2xs backdrop-blur-xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 dark:bg-white/[0.04] border border-purple-200/60 dark:border-white/[0.08] text-[11px] font-mono text-[#6D28D9] dark:text-[#C4B5FD] mb-3 shadow-2xs backdrop-blur-xs">
               <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
               <Compass size={12} />
               <span>Creative Discovery Feed</span>
             </div>
-            <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-ink">
+            <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">
               Explore
             </h1>
-            <p className="mt-1 text-sm text-ink-secondary">
+            <p className="mt-1 text-sm text-ink-secondary dark:text-slate-400">
               A quiet visual feed for the brand decisions you are shaping.
             </p>
           </div>
 
           {/* Tab navigation */}
-          <nav className="flex items-center gap-1.5 p-1 rounded-full bg-stone-100/80 border border-black/[0.04] text-xs backdrop-blur-xs overflow-x-auto max-w-full">
+          <nav className="flex items-center gap-1.5 p-1 rounded-full bg-stone-100/80 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] text-xs backdrop-blur-xs overflow-x-auto max-w-full">
             <button
               type="button"
               onClick={() => setActiveTab("discover")}
               className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "discover"
-                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
-                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
+                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80 dark:border-[#8B5CF6]/30"
+                  : "text-ink-secondary dark:text-slate-400 hover:text-ink dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.04]"
               }`}
             >
               <Compass size={13} className={activeTab === "discover" ? "text-[#8B5CF6]" : ""} />
@@ -298,8 +298,8 @@ function ExploreContent() {
               onClick={() => setActiveTab("typography")}
               className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "typography"
-                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
-                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
+                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80 dark:border-[#8B5CF6]/30"
+                  : "text-ink-secondary dark:text-slate-400 hover:text-ink dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.04]"
               }`}
             >
               <Type size={13} className={activeTab === "typography" ? "text-[#8B5CF6]" : ""} />
@@ -311,8 +311,8 @@ function ExploreContent() {
               onClick={() => setActiveTab("colors")}
               className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "colors"
-                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
-                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
+                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80 dark:border-[#8B5CF6]/30"
+                  : "text-ink-secondary dark:text-slate-400 hover:text-ink dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.04]"
               }`}
             >
               <Droplets size={13} className={activeTab === "colors" ? "text-[#8B5CF6]" : ""} />
@@ -324,8 +324,8 @@ function ExploreContent() {
               onClick={() => setActiveTab("image-palette")}
               className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "image-palette"
-                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
-                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
+                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80 dark:border-[#8B5CF6]/30"
+                  : "text-ink-secondary dark:text-slate-400 hover:text-ink dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.04]"
               }`}
             >
               <Palette size={13} className={activeTab === "image-palette" ? "text-[#8B5CF6]" : ""} />
@@ -337,8 +337,8 @@ function ExploreContent() {
               onClick={() => setActiveTab("references")}
               className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "references"
-                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
-                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
+                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80 dark:border-[#8B5CF6]/30"
+                  : "text-ink-secondary dark:text-slate-400 hover:text-ink dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.04]"
               }`}
             >
               <BookOpen size={13} className={activeTab === "references" ? "text-[#8B5CF6]" : ""} />
@@ -350,14 +350,14 @@ function ExploreContent() {
               onClick={() => setActiveTab("saved")}
               className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "saved"
-                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
-                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
+                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80 dark:border-[#8B5CF6]/30"
+                  : "text-ink-secondary dark:text-slate-400 hover:text-ink dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/[0.04]"
               }`}
             >
               <Bookmark size={13} className={activeTab === "saved" ? "text-[#8B5CF6]" : ""} />
               <span>Saved</span>
               {library.length > 0 && (
-                <span className="font-mono text-[10px] text-ink-tertiary">
+                <span className="font-mono text-[10px] text-ink-tertiary dark:text-slate-400">
                   ({library.length})
                 </span>
               )}
@@ -367,7 +367,7 @@ function ExploreContent() {
 
         {/* ── Project-Aware Banner (Phase 10) ───────────────────────────── */}
         {contextualProject && (
-          <div className="p-4 rounded-[22px] border border-purple-200/70 bg-gradient-to-r from-purple-50/70 via-white to-purple-50/40 backdrop-blur-md shadow-sm flex items-center justify-between gap-4">
+          <div className="p-4 rounded-[22px] border border-purple-200/70 dark:border-purple-500/30 bg-gradient-to-r from-purple-50/70 via-white to-purple-50/40 dark:from-[#131628] dark:via-[#16192E] dark:to-[#131628] backdrop-blur-md shadow-sm flex items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9] text-white flex items-center justify-center shadow-sm shrink-0">
                 <Sparkles size={16} />
@@ -377,9 +377,9 @@ function ExploreContent() {
                   <span>Curated for {contextualProject.name}</span>
                   <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] animate-pulse" />
                 </div>
-                <div className="text-[11px] text-ink-tertiary mt-0.5">
+                <div className="text-[11px] text-ink-tertiary dark:text-slate-400 mt-0.5">
                   Filtering visual tone based on Brand Brain:{" "}
-                  <span className="text-[#6D28D9] font-medium font-mono">
+                  <span className="text-[#6D28D9] dark:text-[#C4B5FD] font-medium font-mono">
                     {contextualProject.brandBrain?.visualDirection?.shouldFeelLike?.join(" · ") ||
                       "Editorial · Minimal · Contemporary"}
                   </span>
@@ -389,7 +389,7 @@ function ExploreContent() {
 
             <Link
               href={`/project/${contextualProject.id}`}
-              className="text-xs text-[#6D28D9] hover:text-[#5B21B6] inline-flex items-center gap-1.5 font-semibold px-3.5 py-1.5 rounded-full bg-white border border-purple-100 shadow-2xs hover:shadow-sm transition-all shrink-0"
+              className="text-xs text-[#6D28D9] dark:text-[#C4B5FD] hover:text-[#5B21B6] inline-flex items-center gap-1.5 font-semibold px-3.5 py-1.5 rounded-full bg-white dark:bg-white/[0.08] border border-purple-100 dark:border-purple-500/30 shadow-2xs hover:shadow-sm transition-all shrink-0"
             >
               <span>Back to Canvas</span>
               <ExternalLink size={12} />
@@ -413,7 +413,7 @@ function ExploreContent() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search inspiration across branding, typography, packaging, posters, visual references..."
-                className="w-full h-12 pl-12 pr-12 rounded-full border border-black/[0.08] bg-white text-sm text-ink placeholder:text-ink-tertiary outline-none focus:border-[#8B5CF6] focus:ring-4 focus:ring-[#8B5CF6]/15 transition-all shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
+                className="w-full h-12 pl-12 pr-12 rounded-full border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#121422] text-sm text-ink dark:text-white placeholder:text-ink-tertiary dark:placeholder:text-slate-500 outline-none focus:border-[#8B5CF6] focus:ring-4 focus:ring-[#8B5CF6]/15 transition-all shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
                 {isPixabayLoading && (

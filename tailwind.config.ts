@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,24 +13,33 @@ const config: Config = {
         sans: ["Satoshi", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
       },
       colors: {
-        paper: "#FBFBFA",
+        paper: "var(--bg-paper)",
         surface: {
-          DEFAULT: "#FFFFFF",
-          subtle: "#F6F6F4",
-          muted: "#EFEFEA",
-          hover: "#F3F3F0",
+          DEFAULT: "var(--color-surface)",
+          subtle: "var(--color-surface-subtle)",
+          muted: "var(--color-surface-muted)",
+          hover: "var(--color-surface-hover)",
         },
         border: {
-          subtle: "#EBEBE7",
-          line: "#E0E0DB",
-          dark: "#D0D0CA",
+          subtle: "var(--color-border)",
+          line: "var(--color-border-line)",
+          dark: "var(--color-border-dark)",
         },
         ink: {
-          DEFAULT: "#191918",
-          primary: "#171716",
-          secondary: "#6B6B66",
-          tertiary: "#969690",
-          faint: "#BCBCB6",
+          DEFAULT: "var(--color-ink)",
+          primary: "var(--color-ink)",
+          secondary: "var(--color-ink-secondary)",
+          tertiary: "var(--color-ink-tertiary)",
+          faint: "var(--color-ink-faint)",
+        },
+        agix: {
+          dark: "#08090E",
+          surface: "#0E1018",
+          card: "#121422",
+          violet: "#8B5CF6",
+          purple: "#A855F7",
+          cyan: "#38BDF8",
+          glow: "rgba(139, 92, 246, 0.25)",
         },
       },
       letterSpacing: {
@@ -42,6 +52,8 @@ const config: Config = {
         subtle: "0 1px 2px rgba(0, 0, 0, 0.03)",
         card: "0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02)",
         lifted: "0 4px 12px rgba(0, 0, 0, 0.05)",
+        "glow-violet": "0 0 24px rgba(139, 92, 246, 0.35)",
+        "glow-cyan": "0 0 24px rgba(56, 189, 248, 0.3)",
       },
     },
   },
