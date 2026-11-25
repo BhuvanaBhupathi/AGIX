@@ -1,7 +1,7 @@
 AGIX — THE CREATIVE WORKSPACE FOR BRAND DESIGNERS
 
 
-<img width="836" alt="AGIX Futuristic Brand Banner" src="./img/AGIX%20Futuristic%20Brand%20Banner.png" />
+<img width="100%" alt="AGIX — The Creative Workspace for Brand Designers" src="./img/agix-banner.jpg" />
 
 Agix is a unified creative workspace for brand designers to research, explore, organize, experiment, build brand directions, and get client approval — without constantly switching between disconnected tools.
 

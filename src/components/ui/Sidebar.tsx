@@ -42,14 +42,29 @@ export function Sidebar() {
       <div className="px-2 pt-1 pb-3">
         <Link
           href="/home"
-          className="flex items-center gap-2.5 group rounded-full p-1 -ml-1 transition-opacity duration-150 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-1"
+          className="flex items-center gap-2.5 group rounded-2xl p-1.5 -ml-1 transition-all duration-200 hover:bg-stone-100/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]/30 focus-visible:ring-offset-1"
         >
-          <div className="h-6 w-6 rounded-xl bg-ink flex items-center justify-center text-[11px] font-bold text-white tracking-tighter shadow-sm">
-            O
+          <div className="h-7 w-7 rounded-xl bg-gradient-to-br from-[#A855F7] via-[#8B5CF6] to-[#4C1D95] flex items-center justify-center text-[11px] font-black text-white tracking-wider shadow-[0_2px_10px_rgba(139,92,246,0.35)] ring-1 ring-white/20 group-hover:scale-105 group-hover:shadow-[0_4px_16px_rgba(168,85,247,0.45)] transition-all duration-200">
+            <svg
+              viewBox="0 0 24 24"
+              className="w-3.5 h-3.5 text-white fill-none stroke-current stroke-[2.8]"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 19L12 5L20 19" />
+            </svg>
           </div>
-          <span className="font-semibold text-xs tracking-wider uppercase text-ink">
-            Agix
-          </span>
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="font-bold text-xs tracking-[0.14em] uppercase text-ink group-hover:text-black">
+                AGIX
+              </span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_6px_#A855F7] animate-pulse" />
+            </div>
+            <span className="text-[9px] font-mono text-ink-tertiary uppercase tracking-widest">
+              Brand Studio
+            </span>
+          </div>
         </Link>
       </div>
 
