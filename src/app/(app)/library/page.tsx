@@ -136,15 +136,21 @@ export default function LibraryPage() {
   };
 
   return (
-    <div className="space-y-8 max-w-6xl">
+    <div className="relative space-y-8 max-w-6xl">
+      {/* Ambient background caustics */}
+      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80" />
+      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60" />
+
       {/* ── Header ──────────────────────────────────────────────────────── */}
-      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 pb-6 border-b border-border-subtle">
+      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 pb-6 border-b border-black/[0.06]">
         <div>
-          <span className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary">
-            Workspace Memory
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-ink mt-0.5">
-            Creative Library
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 border border-purple-200/60 text-[11px] font-mono text-[#6D28D9] mb-3 shadow-2xs backdrop-blur-xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
+            <FolderOpen size={12} />
+            <span>Design System Tokens & Assets</span>
+          </div>
+          <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-ink mt-0.5">
+            Creative Library <span className="text-ink-tertiary font-normal text-2xl font-mono">({library.length})</span>
           </h1>
           <p className="mt-1 text-xs sm:text-sm text-ink-secondary">
             Your persistent collection of saved fonts, colors, palettes, and visual references.
@@ -153,27 +159,24 @@ export default function LibraryPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/explore"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-black/[0.06] bg-white text-xs font-medium text-ink hover:bg-stone-50 transition-colors shadow-sm"
+            className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] hover:from-[#2E1A47] hover:to-[#1E1130] text-white text-xs sm:text-sm font-medium transition-all duration-300 ease-out shadow-sm hover:shadow-[0_8px_24px_rgba(139,92,246,0.25)] hover:-translate-y-[1px] active:translate-y-0 border border-purple-500/25 ring-1 ring-white/10 shrink-0"
           >
-            <Sparkles size={13} />
-            <span>Discover more</span>
+            <Sparkles size={14} className="text-purple-300 transition-transform duration-300 group-hover:rotate-12" />
+            <span>Discover Inspiration</span>
           </Link>
-          <span className="text-xs font-mono text-ink-tertiary px-3 py-1.5 rounded-full bg-stone-100 border border-black/[0.03]">
-            {library.length} item{library.length === 1 ? "" : "s"}
-          </span>
         </div>
       </header>
 
       {/* ── Filter Bar & Search ────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-        <div className="flex gap-1.5 p-1 rounded-full bg-stone-100/80 border border-black/[0.04] w-fit overflow-x-auto">
+        <div className="flex gap-1.5 p-1 rounded-full bg-stone-100/80 border border-black/[0.04] w-fit overflow-x-auto backdrop-blur-xs">
           {FILTERS.map((entry) => (
             <button
               key={entry}
               type="button"
               onClick={() => setFilter(entry)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${filter === entry
-                  ? "bg-white text-ink shadow-sm"
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${filter === entry
+                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
                   : "text-ink-secondary hover:text-ink hover:bg-white/50"
                 }`}
             >
@@ -189,7 +192,7 @@ export default function LibraryPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search saved items..."
-            className="w-full h-10 pl-9 pr-8 rounded-full border border-black/[0.06] bg-white text-xs text-ink placeholder:text-ink-tertiary focus:border-ink focus:outline-none transition-all shadow-sm"
+            className="w-full h-10 pl-9 pr-8 rounded-full border border-black/[0.06] bg-white text-xs text-ink placeholder:text-ink-tertiary focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 focus:outline-none transition-all shadow-2xs"
           />
           {query && (
             <button
@@ -209,7 +212,7 @@ export default function LibraryPage() {
           {items.map((item) => (
             <article
               key={item.id}
-              className="group rounded-[24px] border border-black/[0.06] bg-white p-5 hover:border-black/[0.12] hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+              className="group rounded-[26px] border border-black/[0.06] bg-white p-5 hover:border-[#8B5CF6]/30 hover:shadow-[0_14px_32px_rgba(139,92,246,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">

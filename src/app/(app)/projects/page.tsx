@@ -40,16 +40,21 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="relative space-y-8 max-w-6xl">
+      {/* Ambient background caustics */}
+      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80" />
+      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60" />
+
       {/* Header Area */}
-      <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-2 border-b border-border-subtle">
+      <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pb-6 border-b border-black/[0.06]">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-ink-tertiary mb-1">
-            <Layers size={13} />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 border border-purple-200/60 text-[11px] font-mono text-[#6D28D9] mb-3 shadow-2xs backdrop-blur-xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
+            <Layers size={12} />
             <span>Workspace Repository</span>
           </div>
           <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-ink">
-            Projects
+            Projects <span className="text-ink-tertiary font-normal text-2xl font-mono">({projects.length})</span>
           </h1>
           <p className="mt-1 text-sm text-ink-secondary">
             All your brand workspaces, visual identities, and studio archives in one place.
@@ -57,22 +62,21 @@ export default function ProjectsPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button
-            variant="primary"
-            size="md"
+          <button
+            type="button"
             onClick={() => setIsNewProjectModalOpen(true)}
-            className="flex items-center gap-1.5"
+            className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] hover:from-[#2E1A47] hover:to-[#1E1130] text-white text-xs sm:text-sm font-medium transition-all duration-300 ease-out shadow-sm hover:shadow-[0_8px_24px_rgba(139,92,246,0.25)] hover:-translate-y-[1px] active:translate-y-0 border border-purple-500/25 ring-1 ring-white/10 shrink-0"
           >
-            <Plus size={14} className="text-white shrink-0" />
-            <span className="text-white font-medium">New Project</span>
-          </Button>
+            <Plus size={15} className="text-purple-300 transition-transform duration-300 group-hover:rotate-90" />
+            <span>New Project</span>
+          </button>
         </div>
       </header>
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
         {/* Status Tabs */}
-        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-surface-subtle border border-border-subtle w-fit">
+        <div className="flex items-center gap-1 p-1 rounded-full bg-stone-100/80 border border-black/[0.04] w-fit backdrop-blur-xs">
           {(["All", "Active", "Draft"] as const).map((tab) => {
             const count =
               tab === "All"
@@ -83,10 +87,10 @@ export default function ProjectsPage() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
                   activeTab === tab
-                    ? "bg-surface text-ink shadow-subtle font-semibold"
-                    : "text-ink-secondary hover:text-ink"
+                    ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
+                    : "text-ink-secondary hover:text-ink hover:bg-white/50"
                 }`}
               >
                 <span>{tab}</span>
@@ -99,17 +103,17 @@ export default function ProjectsPage() {
         </div>
 
         {/* Search Input */}
-        <div className="relative w-full sm:w-64">
+        <div className="relative w-full sm:w-72">
           <Search
             size={14}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-tertiary"
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-tertiary"
           />
           <input
             type="text"
             placeholder="Search projects or clients..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-8 pl-8 pr-3 text-xs bg-surface rounded-md border border-border-subtle placeholder:text-ink-tertiary focus:border-ink focus:outline-none"
+            className="w-full h-9 pl-9 pr-3 text-xs bg-white rounded-full border border-black/[0.06] placeholder:text-ink-tertiary focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 focus:outline-none transition-all shadow-2xs"
           />
         </div>
       </div>
@@ -128,13 +132,13 @@ export default function ProjectsPage() {
           {/* Quick Add Project Card */}
           <button
             onClick={() => setIsNewProjectModalOpen(true)}
-            className="group rounded-xl border border-dashed border-border-subtle hover:border-ink/30 bg-surface/40 hover:bg-surface-subtle p-6 flex flex-col items-center justify-center min-h-[280px] transition-all text-center cursor-pointer"
+            className="group rounded-[26px] border border-dashed border-black/[0.12] hover:border-[#8B5CF6]/50 bg-white/60 hover:bg-gradient-to-b hover:from-white hover:to-purple-50/30 p-6 flex flex-col items-center justify-center min-h-[280px] transition-all duration-300 text-center cursor-pointer hover:shadow-[0_12px_28px_rgba(139,92,246,0.08)] hover:-translate-y-1"
           >
-            <div className="h-10 w-10 rounded-full bg-surface border border-border-subtle flex items-center justify-center text-ink-tertiary group-hover:text-ink transition-colors mb-3">
+            <div className="h-12 w-12 rounded-2xl bg-stone-100/80 group-hover:bg-[#181126] border border-black/[0.04] flex items-center justify-center text-ink-secondary group-hover:text-purple-300 transition-all duration-300 mb-3.5 shadow-2xs group-hover:scale-105">
               <Plus size={18} />
             </div>
-            <p className="text-sm font-medium text-ink">New Brand Workspace</p>
-            <p className="text-xs text-ink-tertiary mt-1 max-w-[180px]">
+            <p className="text-sm font-semibold text-ink group-hover:text-[#6D28D9] transition-colors">New Brand Workspace</p>
+            <p className="text-xs text-ink-tertiary mt-1 max-w-[200px] leading-relaxed">
               Start an exploratory canvas, typography study, or identity system.
             </p>
           </button>

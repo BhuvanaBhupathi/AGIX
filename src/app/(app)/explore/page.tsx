@@ -256,15 +256,21 @@ function ExploreContent() {
   };
 
   return (
-    <div className="space-y-8 pb-16 max-w-7xl mx-auto">
+    <div className="relative space-y-8 pb-16 max-w-7xl mx-auto">
+      {/* Ambient background caustics */}
+      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80" />
+      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60" />
+
       {/* ── Header Area ─────────────────────────────────────────────────── */}
-      <header className="space-y-4 pb-2 border-b border-border-subtle">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <header className="space-y-4 pb-6 border-b border-black/[0.06]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary block mb-1">
-              Creative Discovery
-            </span>
-            <h1 className="text-3xl font-semibold tracking-tight text-ink">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 border border-purple-200/60 text-[11px] font-mono text-[#6D28D9] mb-3 shadow-2xs backdrop-blur-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
+              <Compass size={12} />
+              <span>Creative Discovery Feed</span>
+            </div>
+            <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-ink">
               Explore
             </h1>
             <p className="mt-1 text-sm text-ink-secondary">
@@ -273,82 +279,82 @@ function ExploreContent() {
           </div>
 
           {/* Tab navigation */}
-          <nav className="flex items-center gap-1 p-1 rounded-xl bg-surface border border-border-subtle text-xs">
+          <nav className="flex items-center gap-1.5 p-1 rounded-full bg-stone-100/80 border border-black/[0.04] text-xs backdrop-blur-xs overflow-x-auto max-w-full">
             <button
               type="button"
               onClick={() => setActiveTab("discover")}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "discover"
-                  ? "bg-surface-subtle text-ink shadow-subtle"
-                  : "text-ink-secondary hover:text-ink"
+                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
+                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
               }`}
             >
-              <Compass size={13} />
+              <Compass size={13} className={activeTab === "discover" ? "text-[#8B5CF6]" : ""} />
               <span>Discover</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("typography")}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "typography"
-                  ? "bg-surface-subtle text-ink shadow-subtle"
-                  : "text-ink-secondary hover:text-ink"
+                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
+                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
               }`}
             >
-              <Type size={13} />
+              <Type size={13} className={activeTab === "typography" ? "text-[#8B5CF6]" : ""} />
               <span>Typography</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("colors")}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "colors"
-                  ? "bg-surface-subtle text-ink shadow-subtle"
-                  : "text-ink-secondary hover:text-ink"
+                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
+                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
               }`}
             >
-              <Droplets size={13} />
+              <Droplets size={13} className={activeTab === "colors" ? "text-[#8B5CF6]" : ""} />
               <span>Colors</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("image-palette")}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "image-palette"
-                  ? "bg-surface-subtle text-ink shadow-subtle"
-                  : "text-ink-secondary hover:text-ink"
+                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
+                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
               }`}
             >
-              <Palette size={13} />
+              <Palette size={13} className={activeTab === "image-palette" ? "text-[#8B5CF6]" : ""} />
               <span>Image → Palette</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("references")}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "references"
-                  ? "bg-surface-subtle text-ink shadow-subtle"
-                  : "text-ink-secondary hover:text-ink"
+                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
+                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
               }`}
             >
-              <BookOpen size={13} />
+              <BookOpen size={13} className={activeTab === "references" ? "text-[#8B5CF6]" : ""} />
               <span>References</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("saved")}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "saved"
-                  ? "bg-surface-subtle text-ink shadow-subtle"
-                  : "text-ink-secondary hover:text-ink"
+                  ? "bg-white text-ink shadow-[0_2px_8px_rgba(139,92,246,0.12)] font-semibold border border-purple-100/80"
+                  : "text-ink-secondary hover:text-ink hover:bg-white/50"
               }`}
             >
-              <Bookmark size={13} />
+              <Bookmark size={13} className={activeTab === "saved" ? "text-[#8B5CF6]" : ""} />
               <span>Saved</span>
               {library.length > 0 && (
                 <span className="font-mono text-[10px] text-ink-tertiary">
@@ -361,18 +367,19 @@ function ExploreContent() {
 
         {/* ── Project-Aware Banner (Phase 10) ───────────────────────────── */}
         {contextualProject && (
-          <div className="p-3.5 rounded-xl border border-border-subtle bg-surface-subtle/70 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-surface flex items-center justify-center text-ink border border-border-subtle shrink-0">
-                <Sparkles size={15} />
+          <div className="p-4 rounded-[22px] border border-purple-200/70 bg-gradient-to-r from-purple-50/70 via-white to-purple-50/40 backdrop-blur-md shadow-sm flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9] text-white flex items-center justify-center shadow-sm shrink-0">
+                <Sparkles size={16} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-ink">
-                  Curated for {contextualProject.name}
+                <div className="text-xs font-semibold text-ink flex items-center gap-2">
+                  <span>Curated for {contextualProject.name}</span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] animate-pulse" />
                 </div>
-                <div className="text-[11px] text-ink-tertiary">
+                <div className="text-[11px] text-ink-tertiary mt-0.5">
                   Filtering visual tone based on Brand Brain:{" "}
-                  <span className="text-ink-secondary font-medium">
+                  <span className="text-[#6D28D9] font-medium font-mono">
                     {contextualProject.brandBrain?.visualDirection?.shouldFeelLike?.join(" · ") ||
                       "Editorial · Minimal · Contemporary"}
                   </span>
@@ -382,7 +389,7 @@ function ExploreContent() {
 
             <Link
               href={`/project/${contextualProject.id}`}
-              className="text-xs text-ink hover:underline inline-flex items-center gap-1 font-medium"
+              className="text-xs text-[#6D28D9] hover:text-[#5B21B6] inline-flex items-center gap-1.5 font-semibold px-3.5 py-1.5 rounded-full bg-white border border-purple-100 shadow-2xs hover:shadow-sm transition-all shrink-0"
             >
               <span>Back to Canvas</span>
               <ExternalLink size={12} />
@@ -395,22 +402,22 @@ function ExploreContent() {
       {(activeTab === "discover" || activeTab === "references") && (
         <div className="space-y-6">
           {/* Search bar & Suggested topics */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="relative">
               <Search
                 size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary"
+                className="absolute left-4.5 top-1/2 -translate-y-1/2 text-ink-tertiary"
               />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search inspiration across branding, typography, packaging, posters, Pixabay imagery..."
-                className="w-full h-12 pl-11 pr-11 rounded-full border border-black/[0.06] bg-white text-sm text-ink placeholder:text-ink-tertiary outline-none focus:border-ink transition-all shadow-sm"
+                placeholder="Search inspiration across branding, typography, packaging, posters, visual references..."
+                className="w-full h-12 pl-12 pr-12 rounded-full border border-black/[0.08] bg-white text-sm text-ink placeholder:text-ink-tertiary outline-none focus:border-[#8B5CF6] focus:ring-4 focus:ring-[#8B5CF6]/15 transition-all shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
                 {isPixabayLoading && (
-                  <Loader2 size={15} className="animate-spin text-ink-tertiary" />
+                  <Loader2 size={15} className="animate-spin text-[#8B5CF6]" />
                 )}
                 {searchQuery && (
                   <button
@@ -431,10 +438,10 @@ function ExploreContent() {
                 <button
                   type="button"
                   onClick={() => setActiveTopic("All")}
-                  className={`px-3.5 py-1.5 rounded-full whitespace-nowrap transition-colors ${
+                  className={`px-4 py-1.5 rounded-full whitespace-nowrap transition-all ${
                     activeTopic === "All"
-                      ? "bg-ink text-white font-medium shadow-sm"
-                      : "bg-white text-ink-secondary border border-black/[0.05] hover:text-ink hover:bg-stone-50"
+                      ? "bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] text-white font-medium shadow-[0_4px_12px_rgba(139,92,246,0.2)] border border-purple-500/30"
+                      : "bg-white text-ink-secondary border border-black/[0.06] hover:text-ink hover:border-[#8B5CF6]/30 hover:bg-purple-50/20 shadow-2xs"
                   }`}
                 >
                   All Topics
@@ -445,10 +452,10 @@ function ExploreContent() {
                     key={topic}
                     type="button"
                     onClick={() => setActiveTopic(topic)}
-                    className={`px-3.5 py-1.5 rounded-full whitespace-nowrap transition-colors ${
+                    className={`px-4 py-1.5 rounded-full whitespace-nowrap transition-all ${
                       activeTopic === topic
-                        ? "bg-ink text-white font-medium shadow-sm"
-                        : "bg-white text-ink-secondary border border-black/[0.05] hover:text-ink hover:bg-stone-50"
+                        ? "bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] text-white font-medium shadow-[0_4px_12px_rgba(139,92,246,0.2)] border border-purple-500/30"
+                        : "bg-white text-ink-secondary border border-black/[0.06] hover:text-ink hover:border-[#8B5CF6]/30 hover:bg-purple-50/20 shadow-2xs"
                     }`}
                   >
                     {topic}
