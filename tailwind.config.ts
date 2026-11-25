@@ -10,7 +10,36 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Satoshi", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        sans: [
+          "'Satoshi'",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        display: [
+          "'Satoshi'",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "sans-serif",
+        ],
+        serif: [
+          "'Instrument Serif'",
+          "'Playfair Display'",
+          "Georgia",
+          "serif",
+        ],
+        mono: [
+          "'JetBrains Mono'",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "monospace",
+        ],
       },
       colors: {
         paper: "var(--bg-paper)",

@@ -9,6 +9,16 @@ import {
   Compass,
   FolderOpen,
   Users,
+  Brain,
+  Dna,
+  Bot,
+  Sparkles,
+  ShieldCheck,
+  GitCompare,
+  Sliders,
+  History,
+  Globe,
+  CheckCircle2,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -22,7 +32,7 @@ export function Sidebar() {
   const { user, logout } = useAuth();
   const { projects } = useProjects();
 
-  const navItems = [
+  const primaryItems = [
     { href: "/home", label: "Home", icon: Home },
     {
       href: "/projects",
@@ -33,12 +43,31 @@ export function Sidebar() {
     { href: "/explore", label: "Explore", icon: Compass },
     { href: "/library", label: "Library", icon: FolderOpen },
     { href: "/clients", label: "Clients", icon: Users },
+    { href: "/brand-brain", label: "Brand Brain", icon: Brain },
+  ];
+
+  const intelligenceItems = [
+    { href: "/visual-dna", label: "Visual DNA", icon: Dna },
+    { href: "/ask-board", label: "Ask Your Board", icon: Bot },
+    { href: "/reference-intelligence", label: "Reference Intelligence", icon: Sparkles },
+    { href: "/brand-coherence", label: "Brand Coherence", icon: ShieldCheck },
+  ];
+
+  const decisionsItems = [
+    { href: "/direction-clash", label: "Direction Clash", icon: GitCompare },
+    { href: "/creative-alternatives", label: "Creative Alternatives", icon: Sliders },
+    { href: "/evolution-timeline", label: "Evolution Timeline", icon: History },
+  ];
+
+  const deliveryItems = [
+    { href: "/brand-in-the-wild", label: "Brand in the Wild", icon: Globe },
+    { href: "/client-approval", label: "Client Approval", icon: CheckCircle2 },
   ];
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 flex w-[230px] flex-col border-r border-border-subtle bg-paper px-3 py-4 select-none transition-colors duration-200">
+    <aside className="fixed inset-y-0 left-0 z-30 flex w-[240px] flex-col border-r border-border-subtle bg-paper px-3 py-3 select-none transition-colors duration-200">
       {/* Workspace Header / Wordmark */}
-      <div className="px-2 pt-1 pb-3">
+      <div className="px-2 pt-1 pb-3 shrink-0">
         <Link
           href="/home"
           className="flex items-center gap-2.5 group rounded-2xl p-1.5 -ml-1 transition-all duration-200 hover:bg-stone-100/70 dark:hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]/30 focus-visible:ring-offset-1"
@@ -61,30 +90,81 @@ export function Sidebar() {
               <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
             </div>
             <span className="text-[9px] font-mono text-ink-tertiary uppercase tracking-widest">
-              Brand Studio
+              BRAND STUDIO
             </span>
           </div>
         </Link>
       </div>
 
-      {/* Navigation Links */}
-      <nav className="space-y-1 py-2">
-        {navItems.map((item) => (
-          <NavigationItem
-            key={item.href}
-            href={item.href}
-            label={item.label}
-            icon={item.icon}
-            isActive={pathname === item.href || (item.href === "/home" && pathname === "/")}
-          />
-        ))}
+      {/* Navigation Links with Scroll Container */}
+      <nav className="flex-1 overflow-y-auto pr-1 space-y-4 py-1 custom-scrollbar">
+        {/* Core Workspace Items */}
+        <div className="space-y-0.5">
+          {primaryItems.map((item) => (
+            <NavigationItem
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              badge={item.badge}
+              isActive={
+                pathname === item.href || (item.href === "/home" && pathname === "/")
+              }
+            />
+          ))}
+        </div>
+
+        {/* Intelligence Systems */}
+        <div className="space-y-0.5 pt-1">
+          <p className="px-3 pb-1 text-[9px] font-mono tracking-widest text-ink-tertiary uppercase font-semibold">
+            INTELLIGENCE
+          </p>
+          {intelligenceItems.map((item) => (
+            <NavigationItem
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              isActive={pathname === item.href}
+            />
+          ))}
+        </div>
+
+        {/* Creative Decisions */}
+        <div className="space-y-0.5 pt-1">
+          <p className="px-3 pb-1 text-[9px] font-mono tracking-widest text-ink-tertiary uppercase font-semibold">
+            CREATIVE DECISIONS
+          </p>
+          {decisionsItems.map((item) => (
+            <NavigationItem
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              isActive={pathname === item.href}
+            />
+          ))}
+        </div>
+
+        {/* Delivery */}
+        <div className="space-y-0.5 pt-1">
+          <p className="px-3 pb-1 text-[9px] font-mono tracking-widest text-ink-tertiary uppercase font-semibold">
+            DELIVERY
+          </p>
+          {deliveryItems.map((item) => (
+            <NavigationItem
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              icon={item.icon}
+              isActive={pathname === item.href}
+            />
+          ))}
+        </div>
       </nav>
 
-      {/* Spacer */}
-      <div className="flex-1" />
-
-      {/* Bottom Area: Settings & Profile */}
-      <div className="pt-3 space-y-2 border-t border-border-subtle">
+      {/* Bottom Area: Settings & User Profile */}
+      <div className="pt-2 shrink-0 space-y-2 border-t border-border-subtle">
         <NavigationItem
           href="/settings"
           label="Settings"
