@@ -11,21 +11,16 @@ import {
   Users,
   Settings,
   LogOut,
-  Moon,
-  Sun,
 } from "lucide-react";
 import { NavigationItem } from "./NavigationItem";
 import { Avatar } from "./Avatar";
 import { useAuth } from "@/lib/auth-context";
 import { useProjects } from "@/lib/projects-context";
-import { useTheme } from "@/lib/theme-context";
-import { ThemeToggle } from "./ThemeToggle";
 
 export function Sidebar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const { projects } = useProjects();
-  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { href: "/home", label: "Home", icon: Home },
@@ -88,23 +83,8 @@ export function Sidebar() {
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Bottom Area: Theme Switcher, Settings & Profile */}
+      {/* Bottom Area: Settings & Profile */}
       <div className="pt-3 space-y-2 border-t border-border-subtle">
-        {/* Sleek Theme Switcher Row */}
-        <div className="flex items-center justify-between px-3 py-2 rounded-2xl bg-stone-100/60 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] transition-colors">
-          <div className="flex items-center gap-2">
-            {theme === "dark" ? (
-              <Moon size={14} className="text-[#A78BFA]" />
-            ) : (
-              <Sun size={14} className="text-amber-500" />
-            )}
-            <span className="text-xs font-medium text-ink">
-              {theme === "dark" ? "Dark Mode" : "Light Mode"}
-            </span>
-          </div>
-          <ThemeToggle variant="switch" />
-        </div>
-
         <NavigationItem
           href="/settings"
           label="Settings"

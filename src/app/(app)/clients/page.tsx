@@ -211,7 +211,13 @@ function ClientsContent() {
       )}
 
       {/* Add Client Modal */}
-      <AddClientModal isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} />
+      {isAddOpen && (
+        <AddClientModal
+          isOpen={isAddOpen}
+          onClose={() => setIsAddOpen(false)}
+          onCreated={() => setIsAddOpen(false)}
+        />
+      )}
     </div>
   );
 }

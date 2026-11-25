@@ -7,6 +7,7 @@ import { useProjects } from "@/lib/projects-context";
 import type { ClientStatus } from "./ClientStatusBadge";
 
 interface AddClientModalProps {
+  isOpen?: boolean;
   onClose: () => void;
   onCreated?: (name: string) => void;
 }
@@ -14,10 +15,10 @@ interface AddClientModalProps {
 const STATUS_OPTIONS: ClientStatus[] = ["Lead", "Active", "Inactive"];
 
 const fieldClass =
-  "w-full rounded-lg border border-border-subtle bg-surface-subtle px-3 py-2 text-xs text-ink outline-none focus:border-ink transition-colors placeholder:text-ink-tertiary";
-const labelClass = "block text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-1.5";
+  "w-full rounded-lg border border-border-subtle bg-surface-subtle dark:bg-[#121422] px-3 py-2 text-xs text-ink dark:text-white outline-none focus:border-[#8B5CF6] transition-colors placeholder:text-ink-tertiary dark:placeholder:text-slate-500";
+const labelClass = "block text-[10px] font-mono uppercase tracking-widest text-ink-tertiary dark:text-slate-400 mb-1.5";
 
-export function AddClientModal({ onClose, onCreated }: AddClientModalProps) {
+export function AddClientModal({ isOpen = true, onClose, onCreated }: AddClientModalProps) {
   const { createClient } = useProjects();
 
   const [name, setName] = useState("");
@@ -26,6 +27,8 @@ export function AddClientModal({ onClose, onCreated }: AddClientModalProps) {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<ClientStatus>("Lead");
   const [notes, setNotes] = useState("");
+
+  if (!isOpen) return null;
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,25 +47,25 @@ export function AddClientModal({ onClose, onCreated }: AddClientModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md bg-surface border border-border-subtle rounded-2xl shadow-lifted overflow-hidden"
+        className="relative w-full max-w-md bg-surface dark:bg-[#0E1018] border border-border-subtle dark:border-white/10 rounded-2xl shadow-lifted overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border-subtle">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border-subtle dark:border-white/[0.08]">
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary dark:text-slate-400">
               New record
             </span>
-            <h3 className="text-sm font-semibold text-ink mt-0.5">Add Client</h3>
+            <h3 className="text-sm font-semibold text-ink dark:text-white mt-0.5">Add Client</h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded text-ink-tertiary hover:text-ink hover:bg-surface-subtle"
+            className="p-1.5 rounded-full text-ink-tertiary hover:text-ink dark:hover:text-white hover:bg-surface-subtle dark:hover:bg-white/[0.06] transition-colors"
           >
             <X size={15} />
           </button>
@@ -147,7 +150,7 @@ export function AddClientModal({ onClose, onCreated }: AddClientModalProps) {
           </div>
 
           {/* Footer */}
-          <div className="px-5 py-4 border-t border-border-subtle bg-surface-subtle/30 flex items-center justify-end gap-2">
+          <div className="px-5 py-4 border-t border-border-subtle dark:border-white/[0.08] bg-surface-subtle/30 dark:bg-white/[0.02] flex items-center justify-end gap-2">
             <Button type="button" variant="ghost" size="sm" onClick={onClose}>
               Cancel
             </Button>
