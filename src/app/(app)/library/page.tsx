@@ -2,10 +2,13 @@
 
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
-import { FolderOpen, Plus, Search, Trash2, X, ExternalLink, Sparkles } from "lucide-react";
+import { FolderOpen, Plus, Search, Trash2, X, ExternalLink, Sparkles, Palette } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { CanvasItem, LibraryItem } from "@/lib/data";
 import { useProjects } from "@/lib/projects-context";
+import { OklchColorLab } from "@/components/color-lab/OklchColorLab";
+import { CanvaColorWheel } from "@/components/color-lab/CanvaColorWheel";
+import { Disc, Layers } from "lucide-react";
 
 const FILTERS = ["All", "Fonts", "Colors", "Palettes", "References", "Directions"] as const;
 type Filter = (typeof FILTERS)[number];
@@ -93,6 +96,7 @@ function Preview({ item }: { item: LibraryItem }) {
 
 export default function LibraryPage() {
   const { library, projects, updateProjectCanvas, removeFromLibrary, linkItemToProject } = useProjects();
+  const [activeTab, setActiveTab] = useState<"wheel" | "spectral" | "library">("wheel");
   const [filter, setFilter] = useState<Filter>("All");
   const [query, setQuery] = useState("");
   const [itemToAdd, setItemToAdd] = useState<LibraryItem | null>(null);
@@ -167,7 +171,53 @@ export default function LibraryPage() {
         </div>
       </header>
 
-      {/* ── Filter Bar & Search ────────────────────────────────────────── */}
+      {/* ── View Mode Switcher: Color Wheel vs OKLCH Spectral Lab vs Saved Asset Grid ──── */}
+      <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-stone-100/90 dark:bg-[#11131E] border border-black/[0.06] dark:border-white/[0.08] w-fit shadow-xs">
+        <button
+          type="button"
+          onClick={() => setActiveTab("wheel")}
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+            activeTab === "wheel"
+              ? "bg-[#7C3AED] text-white shadow-md shadow-purple-500/25"
+              : "text-ink-secondary dark:text-slate-400 hover:text-ink hover:bg-white/40 dark:hover:bg-white/[0.04]"
+          }`}
+        >
+          <Disc size={13} />
+          <span>Color Wheel</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("spectral")}
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+            activeTab === "spectral"
+              ? "bg-[#EC4899] text-white shadow-md shadow-pink-500/25"
+              : "text-ink-secondary dark:text-slate-400 hover:text-ink hover:bg-white/40 dark:hover:bg-white/[0.04]"
+          }`}
+        >
+          <Layers size={13} />
+          <span>OKLCH Spectral Lab</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("library")}
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+            activeTab === "library"
+              ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-sm border border-black/[0.04] dark:border-white/[0.08]"
+              : "text-ink-secondary dark:text-slate-400 hover:text-ink hover:bg-white/40 dark:hover:bg-white/[0.04]"
+          }`}
+        >
+          <FolderOpen size={13} />
+          <span>Saved Brand Assets ({library.length})</span>
+        </button>
+      </div>
+
+      {activeTab === "wheel" ? (
+        <CanvaColorWheel />
+      ) : activeTab === "spectral" ? (
+        <OklchColorLab />
+      ) : (
+        <>
+          {/* ── Filter Bar & Search ────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
         <div className="flex gap-1.5 p-1 rounded-full bg-stone-100/80 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] w-fit overflow-x-auto backdrop-blur-xs">
           {FILTERS.map((entry) => (
@@ -276,6 +326,8 @@ export default function LibraryPage() {
             <span>Browse Explore</span>
           </Link>
         </div>
+      )}
+      </>
       )}
 
       {/* ── Add to Project Modal ───────────────────────────────────────── */}

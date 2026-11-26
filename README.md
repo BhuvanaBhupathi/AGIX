@@ -5,7 +5,7 @@
   <p><strong>A unified, AI-powered creative decision-making platform for brand designers to research, explore, organize, experiment, develop brand directions, and receive client approvals.</strong></p>
 </div>
 
----
+<img width="100%" alt="AGIX — The Creative Workspace for Brand Designers" src="./img/agix-banner.jpg" />
 
 ## Overview
 
@@ -13,8 +13,8 @@
 
 Branding projects traditionally scatter creative decisions across dozens of disconnected tools: Pinterest boards, font foundries, color generators, client emails, messaging threads, and slide decks. AGIX unifies this entire creative decision lifecycle into a single, cohesive, design-driven operating system.
 
----
-
+Agix connects that entire creative decision-making process into one workspace.
+<img width="807" height="98" alt="WhatsApp Image 2026-09-13 at 1 03 17 AM" src="https://github.com/user-attachments/assets/48f02c01-7dff-446e-bb8d-dfb5328564e8" />
 ## 10 Core Creative Intelligence Systems
 
 ### 01 · Visual DNA Engine (`/visual-dna`)
@@ -156,11 +156,7 @@ SETTINGS                     (/settings)
 
 ## Getting Started
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/BhuvanaBhupathi/AGIX.git
-cd AGIX
-```
+• Visual preferences
 
 ### 2. Install dependencies
 ```bash
@@ -179,6 +175,55 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 02 · Creative Lab & Typography (`/creative-lab`)
+Explore, stress-test, and compare type families using real brand context:
+- Category filters: Serif, Sans, Mono, Display, Editorial, Minimal
+- Multilingual specimen preview & variable font size slider
+- Export integration: CSS `@font-face`, SwiftUI, UIKit, Figma, and OpenType glyph matrix
+
+### 03 · Color Lab (`/color-lab`)
+Explore and build harmonious visual color systems:
+- **Interactive Harmonic Color Wheel**: Drag-and-drop color wheel with exact `#` hex codes, luminance slider, and mathematical harmony pairings:
+  - Complementary (180° contrast)
+  - Monochromatic (shades, tints, and tones)
+  - Analogous (adjacent ±30°)
+  - Triadic (120° equilateral)
+  - Tetradic (90° dual-complementary)
+  - Custom
+- **OKLCH Spectral Lab (P3 Gamut)**: Perceptual contrast generation compliant with APCA Lc standards across 11 systematic stops (50 to 950).
+- One-click copy, hex export, and direct integration into active project canvases.
+
+### 04 · Reference Discovery (`/explore`)
+A visual discovery space inspired by the way designers naturally browse inspiration:
+- Unified inspiration collection without platform hopping
+- Reference intelligence and automated palette/font extraction
+
+---
+
+## Data Flow & Architecture
+
+The core creative data model revolves around a reusable **Creative Item**:
+- `FONT`
+- `COLOR`
+- `PALETTE`
+- `IMAGE`
+- `REFERENCE`
+- `TEMPLATE`
+- `NOTE`
+- `IDEA`
+
+This allows external discovery sources to plug into AGIX without modifying the core library architecture.
+
+---
+
+## Technical Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Frontend**: React 19, TypeScript
+- **Styling**: Tailwind CSS 3.4
+- **Icons**: Lucide React
+- **Typography**: Satoshi (Fontshare), Instrument Serif, JetBrains Mono
 
 ---
 

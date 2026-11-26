@@ -1,256 +1,263 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { useState } from "react";
 import {
   ShieldCheck,
+  Search,
+  MoreHorizontal,
   Sparkles,
   AlertTriangle,
-  Check,
-  TrendingUp,
-  Sliders,
   CheckCircle2,
-  Info,
+  Lock,
   RefreshCw,
+  ExternalLink,
 } from "lucide-react";
 import { useProjects } from "@/lib/projects-context";
-import { BrandProject } from "@/lib/data";
-import { runBrandCoherenceCheck } from "@/lib/intelligence/ai-engine";
-import type { BrandCoherenceReport } from "@/lib/intelligence/types";
-import { ProjectSelectorHeader } from "@/components/intelligence/ProjectSelectorHeader";
 
 export default function BrandCoherencePage() {
-  const searchParams = useSearchParams();
-  const requestedProjectId = searchParams.get("projectId") || searchParams.get("project");
-
   const { projects } = useProjects();
-  const [selectedProject, setSelectedProject] = useState<BrandProject | null>(() => {
-    if (requestedProjectId) {
-      const found = projects.find((p) => p.id === requestedProjectId);
-      if (found) return found;
-    }
-    return projects.length > 0 ? projects[0] : null;
-  });
+  const [selectedProject, setSelectedProject] = useState(projects[0] || null);
+  const [websiteUrl, setWebsiteUrl] = useState("https://www.innovatetech.io");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [confidenceScore, setConfidenceScore] = useState(78);
 
-  const [coherenceReport, setCoherenceReport] = useState<BrandCoherenceReport | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"overview" | "criteria" | "conflicts">("overview");
+  const colors = [
+    { name: "Coral", hex: "#FF6B6B", glow: "rgba(255, 107, 107, 0.4)" },
+    { name: "Navy", hex: "#1A2B4C", glow: "rgba(26, 43, 76, 0.4)" },
+    { name: "Cream", hex: "#F9F4E9", glow: "rgba(249, 244, 233, 0.4)" },
+    { name: "Gold", hex: "#D4AF37", glow: "rgba(212, 175, 55, 0.4)" },
+  ];
 
-  useEffect(() => {
-    if (selectedProject) {
-      setIsLoading(true);
-      runBrandCoherenceCheck(selectedProject)
-        .then((report) => {
-          setCoherenceReport(report);
-          setIsLoading(false);
-        })
-        .catch(() => setIsLoading(false));
-    }
-  }, [selectedProject]);
+  const toneTags = [
+    { label: "Professional", border: "border-rose-500/50", text: "text-rose-300", bg: "bg-rose-500/10" },
+    { label: "Warm", border: "border-amber-400/50", text: "text-amber-300", bg: "bg-amber-400/10" },
+    { label: "Confident", border: "border-amber-500/50", text: "text-amber-400", bg: "bg-amber-500/10" },
+    { label: "Trustworthy", border: "border-slate-500/40", text: "text-slate-300", bg: "bg-slate-500/10" },
+    { label: "Innovative", border: "border-amber-400/50", text: "text-amber-300", bg: "bg-amber-400/10" },
+    { label: "Empathetic", border: "border-slate-500/40", text: "text-slate-300", bg: "bg-slate-500/10" },
+  ];
+
+  const handleAnalyze = () => {
+    setIsAnalyzing(true);
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      setConfidenceScore(84);
+    }, 1200);
+  };
 
   return (
-    <div className="relative space-y-8 max-w-6xl">
-      {/* Ambient caustics */}
+    <div className="relative space-y-6 max-w-7xl mx-auto">
+      {/* Ambient background caustics */}
       <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80 dark:from-[#8B5CF6]/25 dark:via-[#38BDF8]/15" />
       <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60 dark:from-[#6366F1]/20 dark:via-[#A855F7]/15" />
 
-      {/* Header */}
-      <ProjectSelectorHeader
-        badge="Quality & Consistency"
-        badgeIcon={<ShieldCheck size={13} className="text-[#8B5CF6]" />}
-        title="Brand Coherence Engine"
-        description="Comprehensive brand consistency checker validating chromatic harmony, typographic balance, and Brand Brain positioning alignment using explainable metrics."
-        projects={projects}
-        selectedProject={selectedProject}
-        onSelectProject={(p) => setSelectedProject(p)}
-      />
-
-      {!selectedProject || !coherenceReport || isLoading ? (
-        <div className="p-16 rounded-[26px] border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0E1018]/90 text-center space-y-3">
-          <RefreshCw size={24} className="mx-auto text-[#8B5CF6] animate-spin" />
-          <h3 className="text-sm font-semibold text-ink">Running Brand Coherence Analysis…</h3>
-          <p className="text-xs text-ink-secondary dark:text-slate-400">
-            Checking WCAG relative luminance, optical font pairings, and brand personality integrity.
+      {/* ── Page Header (Standard AGIX Pattern) ───────────────────── */}
+      <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pb-6 border-b border-black/[0.06] dark:border-white/[0.08]">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 dark:bg-white/[0.04] border border-purple-200/60 dark:border-white/[0.08] text-[11px] font-mono text-[#6D28D9] dark:text-[#C4B5FD] mb-3 shadow-2xs backdrop-blur-xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
+            <ShieldCheck size={12} />
+            <span>Intelligence · Brand Coherence Engine</span>
+          </div>
+          <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">
+            Brand Coherence Engine
+          </h1>
+          <p className="mt-1 text-sm text-ink-secondary dark:text-slate-400">
+            Evaluates color harmony, typography pairing, and tone alignment across your brand identity elements.
           </p>
         </div>
-      ) : (
-        <div className="space-y-6">
-          {/* Top Score Banner Card */}
-          <div className="p-6 sm:p-8 rounded-[26px] border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0E1018]/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-center gap-5">
-              <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-[#8B5CF6] via-[#6366F1] to-[#38BDF8] text-white flex flex-col items-center justify-center shrink-0 shadow-lg shadow-purple-500/20">
-                <span className="text-2xl font-black">{coherenceReport.overallScore}%</span>
-                <span className="text-[10px] font-mono tracking-wider uppercase opacity-85">Score</span>
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                    Grade: {coherenceReport.grade}
-                  </span>
-                  <span className="text-xs font-mono text-ink-tertiary">
-                    {coherenceReport.conflicts.length} Noticeable Conflicts
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-ink">Brand Identity Alignment Rating</h3>
-                <p className="text-xs text-ink-secondary dark:text-slate-400 max-w-lg">
-                  Every sub-score is computed through explainable mathematical criteria (contrast ratio, scale balance, trait harmony) rather than arbitrary generation.
+
+        {selectedProject && (
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-100/80 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] text-xs font-mono text-ink">
+            <span className="text-ink-tertiary">Active Project:</span>
+            <span className="font-bold text-[#8B5CF6]">{selectedProject.name}</span>
+          </div>
+        )}
+      </header>
+
+      {/* ── URL / Asset Ingestion Bar (Merged with Web UI) ─────────── */}
+      <div className="p-4 rounded-[24px] border border-border-subtle bg-surface shadow-subtle flex flex-col sm:flex-row items-center gap-3 justify-between">
+        <div className="relative flex-1 w-full">
+          <input
+            type="text"
+            value={websiteUrl}
+            onChange={(e) => setWebsiteUrl(e.target.value)}
+            placeholder="https://www.innovatetech.io"
+            className="w-full pl-4 pr-10 py-2.5 rounded-full border border-border-subtle bg-surface-subtle text-xs text-ink placeholder:text-ink-tertiary focus:outline-none focus:border-[#8B5CF6] transition-colors"
+          />
+          <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-tertiary" />
+        </div>
+
+        <button
+          onClick={handleAnalyze}
+          disabled={isAnalyzing}
+          className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] dark:from-[#8B5CF6] dark:via-[#6366F1] dark:to-[#38BDF8] hover:from-[#2E1A47] hover:to-[#1E1130] text-white font-medium text-xs transition-all shadow-sm hover:shadow-[0_8px_20px_rgba(139,92,246,0.3)] shrink-0 flex items-center justify-center gap-2"
+        >
+          {isAnalyzing ? (
+            <>
+              <RefreshCw size={13} className="animate-spin text-purple-300 dark:text-white" />
+              <span>Auditing Brand Assets...</span>
+            </>
+          ) : (
+            <>
+              <Sparkles size={13} className="text-purple-300 dark:text-white" />
+              <span>Analyze Brand Coherence</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* ── Two Large Dashboard Cards (matching Image 5) ─────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+        {/* Card 1: Extracted Brand Elements */}
+        <div className="rounded-[24px] p-6 border border-border-subtle bg-surface shadow-subtle relative overflow-hidden flex flex-col justify-between space-y-6">
+          <div className="space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
+              <div>
+                <h3 className="text-base font-bold text-ink tracking-tight">
+                  Extracted Brand Elements
+                </h3>
+                <p className="text-[11px] text-ink-tertiary font-mono">
+                  Identified palette and typography specimens
                 </p>
               </div>
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-stone-100/80 dark:bg-white/[0.04] text-ink font-bold border border-border-subtle">
+                4 Colors · 2 Typefaces
+              </span>
             </div>
 
-            {/* 4 Category Pill Bars */}
-            <div className="grid grid-cols-2 gap-3 min-w-[280px]">
-              <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121422] space-y-1">
-                <div className="flex justify-between text-[10px] font-mono text-ink-tertiary">
-                  <span>Color Balance</span>
-                  <span className="text-ink font-semibold">{coherenceReport.categoryScores.colorConsistency}%</span>
-                </div>
-                <div className="h-1.5 rounded-full bg-stone-200 dark:bg-white/10 overflow-hidden">
-                  <div className="h-full bg-[#8B5CF6] rounded-full" style={{ width: `${coherenceReport.categoryScores.colorConsistency}%` }} />
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121422] space-y-1">
-                <div className="flex justify-between text-[10px] font-mono text-ink-tertiary">
-                  <span>Typography</span>
-                  <span className="text-ink font-semibold">{coherenceReport.categoryScores.typographyConsistency}%</span>
-                </div>
-                <div className="h-1.5 rounded-full bg-stone-200 dark:bg-white/10 overflow-hidden">
-                  <div className="h-full bg-cyan-500 rounded-full" style={{ width: `${coherenceReport.categoryScores.typographyConsistency}%` }} />
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121422] space-y-1">
-                <div className="flex justify-between text-[10px] font-mono text-ink-tertiary">
-                  <span>Visual Rigor</span>
-                  <span className="text-ink font-semibold">{coherenceReport.categoryScores.visualConsistency}%</span>
-                </div>
-                <div className="h-1.5 rounded-full bg-stone-200 dark:bg-white/10 overflow-hidden">
-                  <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${coherenceReport.categoryScores.visualConsistency}%` }} />
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-stone-50 dark:bg-[#121422] space-y-1">
-                <div className="flex justify-between text-[10px] font-mono text-ink-tertiary">
-                  <span>Personality</span>
-                  <span className="text-ink font-semibold">{coherenceReport.categoryScores.personalityAlignment}%</span>
-                </div>
-                <div className="h-1.5 rounded-full bg-stone-200 dark:bg-white/10 overflow-hidden">
-                  <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${coherenceReport.categoryScores.personalityAlignment}%` }} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation Sub-Tabs */}
-          <div className="flex items-center gap-1.5 p-1 rounded-full bg-stone-100/80 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] text-xs backdrop-blur-xs w-fit">
-            <button
-              type="button"
-              onClick={() => setActiveTab("overview")}
-              className={`px-4 py-1.5 rounded-full font-medium transition-all text-xs ${
-                activeTab === "overview"
-                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-sm font-semibold border border-[#8B5CF6]/30"
-                  : "text-ink-secondary dark:text-slate-400 hover:text-ink hover:bg-white/50"
-              }`}
-            >
-              Actionable Fixes ({coherenceReport.actionableSuggestions.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("conflicts")}
-              className={`px-4 py-1.5 rounded-full font-medium transition-all text-xs ${
-                activeTab === "conflicts"
-                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-sm font-semibold border border-[#8B5CF6]/30"
-                  : "text-ink-secondary dark:text-slate-400 hover:text-ink hover:bg-white/50"
-              }`}
-            >
-              Identified Conflicts ({coherenceReport.conflicts.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("criteria")}
-              className={`px-4 py-1.5 rounded-full font-medium transition-all text-xs ${
-                activeTab === "criteria"
-                  ? "bg-white dark:bg-[#1E2235] text-ink dark:text-white shadow-sm font-semibold border border-[#8B5CF6]/30"
-                  : "text-ink-secondary dark:text-slate-400 hover:text-ink hover:bg-white/50"
-              }`}
-            >
-              Explainable Criteria Breakdown
-            </button>
-          </div>
-
-          {/* TAB 1: ACTIONABLE SUGGESTIONS */}
-          {activeTab === "overview" && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {coherenceReport.actionableSuggestions.map((sug, i) => (
-                <div
-                  key={i}
-                  className="p-5 rounded-[22px] border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0E1018]/90 space-y-2.5 shadow-2xs"
-                >
-                  <span
-                    className={`text-[9px] font-mono uppercase px-2.5 py-0.5 rounded-full ${
-                      sug.impact === "High Impact"
-                        ? "bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200/60"
-                        : "bg-stone-100 dark:bg-white/[0.06] text-ink-secondary"
-                    }`}
-                  >
-                    {sug.impact}
-                  </span>
-                  <h4 className="text-sm font-semibold text-ink">{sug.title}</h4>
-                  <p className="text-xs text-ink-secondary dark:text-slate-400 leading-relaxed">
-                    {sug.action}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* TAB 2: CONFLICTS */}
-          {activeTab === "conflicts" && (
+            {/* Brand Color Palette Swatches */}
             <div className="space-y-3">
-              {coherenceReport.conflicts.map((conf) => (
-                <div
-                  key={conf.id}
-                  className="p-5 rounded-[22px] border border-amber-200/60 dark:border-amber-500/20 bg-amber-50/20 dark:bg-amber-950/10 space-y-2 text-xs"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle size={14} className="text-amber-500" />
-                      <span className="font-semibold text-ink text-sm">{conf.title}</span>
-                    </div>
-                    <span className="text-[10px] font-mono text-amber-600 uppercase bg-amber-100/60 dark:bg-amber-950/40 px-2.5 py-0.5 rounded-full">
-                      {conf.severity} severity · {conf.category}
-                    </span>
-                  </div>
-                  <p className="text-ink-secondary dark:text-slate-300 leading-relaxed">{conf.description}</p>
-                  <div className="pt-1 flex items-center gap-1.5 text-ink-tertiary">
-                    <span className="font-mono text-[10px]">Fix:</span>
-                    <span className="text-ink font-medium">{conf.suggestion}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* TAB 3: EXPLAINABLE CRITERIA */}
-          {activeTab === "criteria" && (
-            <div className="p-6 rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0E1018]/90 space-y-4">
-              <h4 className="text-sm font-bold text-ink">Explainable Calculation Formulas</h4>
-              <div className="divide-y divide-stone-100 dark:divide-white/[0.04]">
-                {coherenceReport.criteriaBreakdown.map((crit, idx) => (
-                  <div key={idx} className="py-4 space-y-1 text-xs first:pt-0 last:pb-0">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-ink text-sm">{crit.name}</span>
-                      <span className="font-mono font-bold text-[#8B5CF6]">{crit.score}% (Weight: {crit.weight}%)</span>
-                    </div>
-                    <p className="text-ink-secondary dark:text-slate-400">{crit.explanation}</p>
+              <h4 className="text-xs font-semibold text-ink-secondary">Brand Color Palette</h4>
+              <div className="grid grid-cols-4 gap-3">
+                {colors.map((c) => (
+                  <div key={c.name} className="flex flex-col items-center gap-1.5 text-center p-3 rounded-2xl bg-stone-50 dark:bg-white/[0.02] border border-border-subtle">
+                    <div
+                      className="h-12 w-12 rounded-full border border-black/10 dark:border-white/20 shadow-md cursor-pointer transition-transform hover:scale-110"
+                      style={{
+                        backgroundColor: c.hex,
+                        boxShadow: `0 0 16px ${c.glow}`,
+                      }}
+                    />
+                    <span className="text-xs font-bold text-ink">{c.name}</span>
+                    <span className="text-[10px] font-mono text-ink-tertiary">{c.hex}</span>
                   </div>
                 ))}
               </div>
             </div>
-          )}
+
+            <div className="h-px w-full bg-border-subtle" />
+
+            {/* Primary Fonts */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-semibold text-ink-secondary">Primary Fonts</h4>
+
+              <div className="space-y-3 text-xs">
+                <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-white/[0.02] border border-border-subtle">
+                  <span className="text-[10px] text-ink-tertiary font-mono uppercase tracking-wider block">Headline Font</span>
+                  <p className="text-base font-bold text-ink mt-0.5">
+                    Innovate Tech: Building the Future
+                  </p>
+                  <span className="text-[11px] text-[#8B5CF6] font-mono font-medium">Poppins Bold / Satoshi</span>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-white/[0.02] border border-border-subtle">
+                  <span className="text-[10px] text-ink-tertiary font-mono uppercase tracking-wider block">Body Font</span>
+                  <p className="text-xs font-normal text-ink mt-0.5">
+                    Empowering modern brands with AI-driven visual direction and automated aesthetic alignment.
+                  </p>
+                  <span className="text-[11px] text-[#8B5CF6] font-mono font-medium">Inter Regular</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Card 2: Brand Tone Analysis */}
+        <div className="rounded-[24px] p-6 border border-border-subtle bg-surface shadow-subtle relative overflow-hidden flex flex-col justify-between space-y-6">
+          <div className="space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
+              <div>
+                <h3 className="text-base font-bold text-ink tracking-tight">
+                  Brand Tone Analysis
+                </h3>
+                <p className="text-[11px] text-ink-tertiary font-mono">
+                  Perceptual tone alignment & sentiment vectors
+                </p>
+              </div>
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20">
+                Coherent
+              </span>
+            </div>
+
+            {/* Speedometer Confidence Arc (matching Image 5) */}
+            <div className="relative flex flex-col items-center justify-center py-2">
+              <svg viewBox="0 0 200 120" className="w-56 h-36">
+                <defs>
+                  <linearGradient id="gaugeGradMerged" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#EF4444" />
+                    <stop offset="50%" stopColor="#F97316" />
+                    <stop offset="100%" stopColor="#FBBF24" />
+                  </linearGradient>
+                </defs>
+
+                {/* Background Track */}
+                <path
+                  d="M 20 100 A 80 80 0 0 1 180 100"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="12"
+                  strokeLinecap="round"
+                  className="text-stone-200 dark:text-white/10"
+                />
+
+                {/* Gradient Arc */}
+                <path
+                  d="M 20 100 A 80 80 0 0 1 180 100"
+                  fill="none"
+                  stroke="url(#gaugeGradMerged)"
+                  strokeWidth="12"
+                  strokeLinecap="round"
+                  strokeDasharray="251.2"
+                  strokeDashoffset={251.2 * (1 - confidenceScore / 100)}
+                  style={{ transition: "stroke-dashoffset 1s ease" }}
+                />
+
+                {/* Needle */}
+                <line
+                  x1="100"
+                  y1="100"
+                  x2={100 + 65 * Math.cos(Math.PI * (1 + confidenceScore / 100))}
+                  y2={100 + 65 * Math.sin(Math.PI * (1 + confidenceScore / 100))}
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  className="text-ink"
+                />
+                <circle cx="100" cy="100" r="4" fill="currentColor" className="text-ink" />
+              </svg>
+
+              {/* Score & Subtitle in center */}
+              <div className="absolute bottom-2 text-center">
+                <span className="text-2xl font-black text-ink">{confidenceScore}%</span>
+                <p className="text-[11px] text-ink-tertiary font-medium">Confidence Score</p>
+              </div>
+            </div>
+
+            {/* Tone Tags Grid (2 columns of 3 pills matching Image 5) */}
+            <div className="grid grid-cols-2 gap-2.5 pt-2">
+              {toneTags.map((t) => (
+                <div
+                  key={t.label}
+                  className={`py-2 px-3 rounded-xl border ${t.border} ${t.bg} text-center text-xs font-semibold ${t.text} transition-transform hover:scale-102`}
+                >
+                  {t.label}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

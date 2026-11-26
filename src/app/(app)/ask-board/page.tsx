@@ -3,34 +3,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  MessageSquareQuote,
+  MessageSquare,
   Send,
   Sparkles,
+  Paperclip,
+  Image as ImageIcon,
+  Lightbulb,
+  Mic,
+  ChevronDown,
+  MoreHorizontal,
+  Diamond,
+  Settings,
+  HelpCircle,
+  ExternalLink,
   Bot,
   User,
-  Layers,
-  ArrowRight,
-  ExternalLink,
   Trash2,
-  HelpCircle,
-  Lightbulb,
+  Lock,
+  ArrowRight,
 } from "lucide-react";
 import { useProjects } from "@/lib/projects-context";
 import { BrandProject } from "@/lib/data";
 import { queryBoard } from "@/lib/intelligence/ai-engine";
 import type { BoardChatMessage } from "@/lib/intelligence/types";
-import { ProjectSelectorHeader } from "@/components/intelligence/ProjectSelectorHeader";
 import { safeStorage } from "@/lib/safe-storage";
-
-const SUGGESTED_QUERIES = [
-  "What colors appear most frequently in my references?",
-  "Which fonts match this brand personality?",
-  "What visual direction connects these references?",
-  "Find inconsistencies in my current direction.",
-  "Suggest three alternative branding directions.",
-  "Explain why this reference works.",
-  "Compare my saved inspiration images.",
-];
 
 export default function AskBoardPage() {
   const searchParams = useSearchParams();
@@ -48,7 +44,17 @@ export default function AskBoardPage() {
   const [messages, setMessages] = useState<BoardChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [selectedModel, setSelectedModel] = useState("Nebula 4.0e");
+  const [activeRecentChat, setActiveRecentChat] = useState("Brand Coherence Audit");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const recentChats = [
+    "Audit Brand Colors",
+    "Extract Visual DNA: Aura",
+    "Compare Direction A vs B",
+    "Positioning White Space",
+    "Font Hierarchy Study",
+  ];
 
   // Load chat history from storage when project changes
   useEffect(() => {
@@ -60,20 +66,7 @@ export default function AskBoardPage() {
       if (stored.length > 0) {
         setMessages(stored);
       } else {
-        // Initial welcome message grounded in project
-        setMessages([
-          {
-            id: `welcome-${Date.now()}`,
-            sender: "assistant",
-            text: `Welcome to **Ask Your Board** for **${selectedProject.name}**.\n\nI am connected to your **${selectedProject.canvasObjects?.length || 0} canvas assets**, **Brand Brain**, and active color palettes. Ask me anything about color harmony, typography alignment, direction consistency, or request creative alternatives.`,
-            timestamp: new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
-            suggestedFollowUps: [
-              "What colors appear most frequently in my references?",
-              "Which fonts match this brand personality?",
-              "Find inconsistencies in my current direction.",
-            ],
-          },
-        ]);
+        setMessages([]);
       }
     }
   }, [selectedProject]);
@@ -99,15 +92,20 @@ export default function AskBoardPage() {
     setIsTyping(true);
 
     try {
-      const assistantMsg = await queryBoard(selectedProject, updated, textToSend);
-      const withAssistant = [...updated, assistantMsg];
-      setMessages(withAssistant);
-      safeStorage.set(`agix_chat_${selectedProject.id}`, withAssistant);
-    } catch {
+      const aiResponse = await queryBoard(
+        selectedProject,
+        textToSend,
+        messages.slice(-6)
+      );
+      const finalMessages = [...updated, aiResponse];
+      setMessages(finalMessages);
+      safeStorage.set(`agix_chat_${selectedProject.id}`, finalMessages);
+    } catch (err) {
+      console.error("Chat error:", err);
       const errorMsg: BoardChatMessage = {
         id: `err-${Date.now()}`,
         sender: "assistant",
-        text: "I encountered a momentary issue querying the board assets. Please try again.",
+        text: "I encountered an error querying your board. Please verify your connection and try again.",
         timestamp: new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
       };
       setMessages([...updated, errorMsg]);
@@ -116,178 +114,300 @@ export default function AskBoardPage() {
     }
   };
 
-  const clearHistory = () => {
-    if (!selectedProject) return;
-    safeStorage.set(`agix_chat_${selectedProject.id}`, []);
-    setMessages([
-      {
-        id: `welcome-reset-${Date.now()}`,
-        sender: "assistant",
-        text: `Conversation cleared. I am ready to analyze **${selectedProject.name}**.`,
-        timestamp: new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
-      },
-    ]);
+  const handleClearHistory = () => {
+    if (selectedProject) {
+      safeStorage.remove(`agix_chat_${selectedProject.id}`);
+      setMessages([]);
+    }
   };
 
   return (
-    <div className="relative space-y-6 max-w-5xl mx-auto flex flex-col h-[calc(100vh-6rem)]">
-      {/* Header */}
-      <ProjectSelectorHeader
-        badge="Board Intelligence"
-        badgeIcon={<MessageSquareQuote size={13} className="text-[#8B5CF6]" />}
-        title="Ask Your Board"
-        description="Conversational AI assistant directly connected to this project's canvas objects, visual references, fonts, and Brand Brain."
-        projects={projects}
-        selectedProject={selectedProject}
-        onSelectProject={(p) => setSelectedProject(p)}
-        actions={
-          <button
-            type="button"
-            onClick={clearHistory}
-            title="Clear Chat History"
-            className="p-2 rounded-full border border-black/[0.08] dark:border-white/[0.08] hover:bg-stone-100 dark:hover:bg-white/[0.06] text-ink-tertiary hover:text-ink transition-colors"
-          >
-            <Trash2 size={14} />
-          </button>
-        }
-      />
+    <div className="relative space-y-6 max-w-7xl mx-auto">
+      {/* Ambient background caustics matching Image 2 */}
+      <div className="pointer-events-none absolute -top-24 right-0 -z-10 h-96 w-96 rounded-full bg-gradient-to-bl from-[#8B5CF6]/15 via-[#A855F7]/10 to-transparent blur-3xl opacity-80 dark:from-[#8B5CF6]/25 dark:via-[#38BDF8]/15" />
+      <div className="pointer-events-none absolute top-72 -left-20 -z-10 h-80 w-80 rounded-full bg-gradient-to-tr from-[#6366F1]/10 via-[#C084FC]/5 to-transparent blur-3xl opacity-60 dark:from-[#6366F1]/20 dark:via-[#A855F7]/15" />
 
-      {/* Chat Messages Body */}
-      <div className="flex-1 overflow-y-auto space-y-4 pr-2">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`flex gap-3.5 ${
-              msg.sender === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            {msg.sender === "assistant" && (
-              <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-[#8B5CF6] to-[#4C1D95] text-white flex items-center justify-center shrink-0 shadow-sm mt-1">
-                <Bot size={15} />
+      {/* ── Page Header (Standard AGIX Pattern) ───────────────────── */}
+      <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pb-6 border-b border-black/[0.06] dark:border-white/[0.08]">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50/80 dark:bg-white/[0.04] border border-purple-200/60 dark:border-white/[0.08] text-[11px] font-mono text-[#6D28D9] dark:text-[#C4B5FD] mb-3 shadow-2xs backdrop-blur-xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] shadow-[0_0_8px_#A855F7] animate-pulse" />
+            <Sparkles size={12} />
+            <span>AI Assist · Nebula Cognitive Co-Pilot</span>
+          </div>
+          <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">
+            Ask Your Board
+          </h1>
+          <p className="mt-1 text-sm text-ink-secondary dark:text-slate-400">
+            Context-aware AI partner querying your project's visual DNA, colors, typography, and reference library.
+          </p>
+        </div>
+
+        {selectedProject && (
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-100/80 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] text-xs font-mono text-ink">
+            <span className="text-ink-tertiary">Active Project:</span>
+            <span className="font-bold text-[#8B5CF6]">{selectedProject.name}</span>
+          </div>
+        )}
+      </header>
+
+      {/* ── Main Two-Pane Body (Merged with Web UI) ───────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Drawer (w-full lg:col-span-4 xl:col-span-3) */}
+        <aside className="lg:col-span-4 xl:col-span-3 rounded-[24px] border border-border-subtle bg-surface shadow-subtle p-5 flex flex-col justify-between gap-6 shrink-0">
+          <div className="space-y-5">
+            {/* Logo / Torus icon */}
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#8B5CF6] via-[#A855F7] to-[#EC4899] flex items-center justify-center text-white shadow-md shadow-purple-500/20">
+                <Sparkles size={16} />
               </div>
-            )}
+              <div>
+                <span className="font-extrabold tracking-wider text-xs text-ink uppercase block">
+                  Nebula Co-Pilot
+                </span>
+                <span className="text-[10px] font-mono text-ink-tertiary">Brand Intelligence</span>
+              </div>
+            </div>
 
-            <div
-              className={`max-w-2xl rounded-[22px] p-4 sm:p-5 space-y-3 ${
-                msg.sender === "user"
-                  ? "bg-[#191918] dark:bg-[#8B5CF6] text-white shadow-sm"
-                  : "bg-white dark:bg-[#0E1018]/90 border border-black/[0.06] dark:border-white/[0.08] text-ink shadow-2xs"
-              }`}
+            {/* New Chat Button */}
+            <button
+              onClick={handleClearHistory}
+              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#191918] via-[#241B35] to-[#191918] dark:from-[#8B5CF6] dark:via-[#6366F1] dark:to-[#38BDF8] text-white font-medium text-xs shadow-sm hover:shadow-[0_6px_20px_rgba(139,92,246,0.3)] hover:opacity-95 transition-all flex items-center justify-center gap-2"
             >
-              <div className="flex items-center justify-between gap-4 text-[10px] font-mono opacity-70">
-                <span>{msg.sender === "user" ? "You" : "Board Assistant"}</span>
-                <span>{msg.timestamp}</span>
-              </div>
+              <MessageSquare size={13} className="text-purple-300 dark:text-white" />
+              <span>New Conversation</span>
+            </button>
 
-              {/* Message text with basic Markdown formatting */}
-              <div className="text-xs sm:text-sm leading-relaxed whitespace-pre-line space-y-2">
-                {msg.text}
+            {/* Recent Chats Section */}
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-ink-tertiary px-1 block">
+                Suggested Prompts
+              </span>
+              <div className="space-y-1">
+                {recentChats.map((title) => (
+                  <button
+                    key={title}
+                    onClick={() => {
+                      setActiveRecentChat(title);
+                      handleSend(title);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs truncate transition-colors ${
+                      activeRecentChat === title
+                        ? "bg-stone-100 dark:bg-white/[0.08] text-ink font-semibold"
+                        : "text-ink-secondary hover:text-ink hover:bg-stone-50 dark:hover:bg-white/[0.04]"
+                    }`}
+                  >
+                    {title}
+                  </button>
+                ))}
               </div>
+            </div>
 
-              {/* Referenced Assets Badges */}
-              {msg.referencedAssets && msg.referencedAssets.length > 0 && (
-                <div className="pt-2 border-t border-black/[0.06] dark:border-white/[0.08] space-y-1.5">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-ink-tertiary dark:text-slate-400">
-                    Grounded in Project Assets:
-                  </span>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {msg.referencedAssets.map((asset, i) => (
-                      <div
-                        key={i}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-stone-100 dark:bg-white/[0.06] text-[11px] font-medium text-ink border border-black/[0.04] dark:border-white/[0.08]"
-                      >
-                        {asset.color && (
-                          <span
-                            className="h-2.5 w-2.5 rounded-full border border-black/20 shrink-0"
-                            style={{ backgroundColor: asset.color }}
-                          />
-                        )}
-                        <span>{asset.title}</span>
-                      </div>
-                    ))}
+            {/* Model Selector Card */}
+            <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-white/[0.02] border border-border-subtle space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-ink-tertiary block">
+                Model Engine
+              </span>
+              <div className="flex items-center justify-between text-xs font-semibold text-ink">
+                <span>{selectedModel}</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                  Multimodal
+                </span>
+              </div>
+              <p className="text-[10px] text-ink-tertiary leading-relaxed">
+                Grounds responses using project references, color palettes, and visual DNA tokens.
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Area: Project Context Status */}
+          <div className="pt-4 border-t border-border-subtle space-y-2 text-xs">
+            <div className="flex items-center justify-between text-ink-secondary">
+              <span className="text-[11px] font-mono">Project Context</span>
+              <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">Active</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-stone-50 dark:bg-white/[0.02] border border-border-subtle text-[11px] text-ink-secondary font-mono truncate">
+              {selectedProject?.name || "Global Workspace"}
+            </div>
+          </div>
+        </aside>
+
+        {/* Right Main Chat Canvas (lg:col-span-8 xl:col-span-9) */}
+        <div className="lg:col-span-8 xl:col-span-9 rounded-[24px] border border-border-subtle bg-surface shadow-subtle p-6 flex flex-col justify-between min-h-[640px] relative overflow-hidden">
+          {/* Subtle cosmic background glow */}
+          <div className="pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-gradient-to-b from-[#8B5CF6]/10 via-[#A855F7]/5 to-transparent blur-3xl opacity-70" />
+
+          {/* Top Bar with Model Switcher & Status */}
+          <div className="flex items-center justify-between pb-4 border-b border-border-subtle shrink-0 z-10">
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs font-bold text-ink">{selectedModel}</span>
+              <span className="text-[11px] text-ink-tertiary font-mono">· Visual & Strategic Analysis</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleClearHistory}
+                title="Clear chat"
+                className="p-1.5 rounded-lg text-ink-tertiary hover:text-ink hover:bg-stone-100 dark:hover:bg-white/[0.06] transition-colors"
+              >
+                <Trash2 size={14} />
+              </button>
+            </div>
+          </div>
+
+          {/* Center Chat View: Hero or Message Stream */}
+          <div className="flex-1 overflow-y-auto py-6 custom-scrollbar z-10">
+            {messages.length === 0 ? (
+              /* Welcome Hero with Cosmic Sphere (matching Image 3) */
+              <div className="flex flex-col items-center justify-center text-center max-w-xl mx-auto pt-6 space-y-6">
+                {/* 3D Glowing Cosmic Nebula Sphere */}
+                <div className="relative h-20 w-20 rounded-full flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#8B5CF6] via-[#EC4899] to-[#38BDF8] blur-md opacity-80 animate-pulse" />
+                  <div className="relative h-16 w-16 rounded-full bg-gradient-to-br from-[#1E1235] via-[#2E1850] to-[#0A071E] border border-white/30 flex items-center justify-center shadow-2xl overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.4),transparent_60%)]" />
+                    <Sparkles size={24} className="text-white" />
                   </div>
                 </div>
-              )}
 
-              {/* Contextual Suggested Follow-ups */}
-              {msg.suggestedFollowUps && msg.suggestedFollowUps.length > 0 && (
-                <div className="pt-2 flex items-center gap-1.5 flex-wrap">
-                  {msg.suggestedFollowUps.map((chip, i) => (
+                <div className="space-y-2">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-ink tracking-tight">
+                    Welcome to your cognitive co-pilot
+                  </h2>
+                  <p className="text-xs sm:text-sm text-ink-secondary dark:text-slate-400 max-w-md mx-auto leading-relaxed">
+                    I am Nebula. You can ask me to analyze project references, audit color harmony, suggest fonts, or test creative directions.
+                  </p>
+                </div>
+
+                {/* 3 Suggestion Cards in a Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full pt-4">
+                  {[
+                    {
+                      icon: "</>",
+                      title: "Audit Colors",
+                      desc: "Find dominant colors in my references and check contrast.",
+                    },
+                    {
+                      icon: "✦",
+                      title: "Compare Directions",
+                      desc: "Compare Direction A with Direction B for audience fit.",
+                    },
+                    {
+                      icon: "💡",
+                      title: "Brainstorm Ideas",
+                      desc: "Suggest 3 luxury minimalist alternative directions.",
+                    },
+                  ].map((card, i) => (
                     <button
                       key={i}
-                      type="button"
-                      onClick={() => handleSend(chip)}
-                      className="text-[11px] px-3 py-1 rounded-full bg-purple-50/80 dark:bg-purple-950/40 border border-purple-200/60 dark:border-purple-500/30 text-[#6D28D9] dark:text-[#C4B5FD] hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors text-left"
+                      onClick={() => handleSend(card.desc)}
+                      className="p-4 rounded-2xl bg-stone-50 dark:bg-white/[0.04] hover:bg-stone-100 dark:hover:bg-white/[0.08] border border-border-subtle text-left transition-all hover:scale-[1.02] shadow-2xs flex flex-col justify-between h-32 group"
                     >
-                      {chip}
+                      <span className="font-mono text-xs text-[#8B5CF6] font-bold">
+                        {card.icon} {card.title}
+                      </span>
+                      <p className="text-[11px] text-ink-secondary leading-snug line-clamp-3 group-hover:text-ink">
+                        "{card.desc}"
+                      </p>
                     </button>
                   ))}
                 </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              /* Message Stream */
+              <div className="space-y-4 max-w-2xl mx-auto">
+                {messages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`flex items-start gap-3 ${
+                      msg.sender === "user" ? "flex-row-reverse" : "flex-row"
+                    }`}
+                  >
+                    <div
+                      className={`h-7 w-7 rounded-xl flex items-center justify-center text-xs shrink-0 ${
+                        msg.sender === "user"
+                          ? "bg-ink text-paper font-bold"
+                          : "bg-gradient-to-tr from-[#8B5CF6] to-[#EC4899] text-white shadow-md shadow-purple-500/30"
+                      }`}
+                    >
+                      {msg.sender === "user" ? <User size={13} /> : <Sparkles size={13} />}
+                    </div>
 
-            {msg.sender === "user" && (
-              <div className="h-8 w-8 rounded-xl bg-stone-200 dark:bg-white/10 text-ink flex items-center justify-center shrink-0 shadow-sm mt-1">
-                <User size={15} />
+                    <div
+                      className={`rounded-2xl p-4 text-xs leading-relaxed max-w-[85%] ${
+                        msg.sender === "user"
+                          ? "bg-ink text-paper font-medium shadow-xs"
+                          : "bg-stone-50 dark:bg-white/[0.05] border border-border-subtle text-ink shadow-2xs"
+                      }`}
+                    >
+                      <p className="whitespace-pre-line">{msg.text}</p>
+                      <span className="text-[9px] font-mono opacity-50 block mt-2">
+                        {msg.timestamp}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+
+                {isTyping && (
+                  <div className="flex items-center gap-2 text-xs text-ink-tertiary pl-10 font-mono">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#A855F7] animate-ping" />
+                    <span>Nebula reasoning with project board...</span>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
             )}
           </div>
-        ))}
 
-        {isTyping && (
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-[#8B5CF6] to-[#4C1D95] text-white flex items-center justify-center shrink-0 shadow-sm">
-              <Bot size={15} />
-            </div>
-            <div className="p-4 rounded-2xl bg-white dark:bg-[#0E1018]/90 border border-black/[0.06] dark:border-white/[0.08] flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#8B5CF6] animate-bounce" />
-              <span className="h-2 w-2 rounded-full bg-[#8B5CF6] animate-bounce [animation-delay:0.2s]" />
-              <span className="h-2 w-2 rounded-full bg-[#8B5CF6] animate-bounce [animation-delay:0.4s]" />
-              <span className="text-xs text-ink-tertiary ml-1 font-mono">Analyzing board assets…</span>
+          {/* Floating Pill Input Bar (matching Image 3) */}
+          <div className="pt-4 z-10 max-w-2xl w-full mx-auto">
+            <div className="rounded-2xl bg-stone-50 dark:bg-white/[0.04] border border-border-subtle p-3 shadow-subtle backdrop-blur-xl space-y-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSend();
+                }}
+                placeholder="Ask anything about your brand project..."
+                className="w-full bg-transparent px-2 text-xs text-ink placeholder:text-ink-tertiary focus:outline-none"
+              />
+
+              <div className="flex items-center justify-between pt-1">
+                {/* Left Action Pills */}
+                <div className="flex items-center gap-1.5 text-[11px] text-ink-secondary">
+                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-stone-200/60 dark:hover:bg-white/10 transition-colors">
+                    <Paperclip size={11} />
+                    <span>Files</span>
+                  </button>
+                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-stone-200/60 dark:hover:bg-white/10 transition-colors">
+                    <ImageIcon size={11} />
+                    <span>Images</span>
+                  </button>
+                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-stone-200/60 dark:hover:bg-white/10 transition-colors">
+                    <Lightbulb size={11} />
+                    <span>Reasoning</span>
+                  </button>
+                </div>
+
+                {/* Right Send & Voice */}
+                <div className="flex items-center gap-2">
+                  <button className="p-1.5 rounded-lg text-ink-tertiary hover:text-ink transition-colors">
+                    <Mic size={14} />
+                  </button>
+                  <button
+                    onClick={() => handleSend()}
+                    disabled={!input.trim() || isTyping}
+                    className="h-7 w-7 rounded-full bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white flex items-center justify-center shadow-md shadow-purple-500/30 disabled:opacity-40"
+                  >
+                    <Send size={12} />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        )}
-        <div ref={messagesEndRef} />
+        </div>
       </div>
-
-      {/* Suggested Query Chips Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-        <span className="text-[10px] font-mono text-ink-tertiary shrink-0 uppercase">Suggested:</span>
-        {SUGGESTED_QUERIES.map((q, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => handleSend(q)}
-            className="px-3 py-1.5 rounded-full bg-stone-100/90 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.08] text-xs text-ink-secondary dark:text-slate-300 hover:text-ink dark:hover:text-white hover:border-[#8B5CF6]/50 whitespace-nowrap transition-all"
-          >
-            {q}
-          </button>
-        ))}
-      </div>
-
-      {/* Input Form Bar */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSend();
-        }}
-        className="relative flex items-center gap-2 p-1.5 rounded-full border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-[#0E1018] shadow-sm focus-within:border-[#8B5CF6] focus-within:ring-2 focus-within:ring-[#8B5CF6]/20 transition-all"
-      >
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask anything about this project's colors, typography, references, or directions…"
-          className="flex-1 bg-transparent px-4 py-2 text-xs sm:text-sm text-ink placeholder:text-ink-tertiary dark:placeholder:text-slate-500 outline-none"
-        />
-        <button
-          type="submit"
-          disabled={!input.trim() || isTyping}
-          className="h-9 w-9 rounded-full bg-[#191918] dark:bg-[#8B5CF6] text-white flex items-center justify-center hover:bg-[#333] dark:hover:bg-[#7C3AED] transition-colors disabled:opacity-40 cursor-pointer shrink-0"
-        >
-          <Send size={14} />
-        </button>
-      </form>
     </div>
   );
 }
