@@ -5,8 +5,6 @@
   <p><strong>A unified, AI-powered creative decision-making platform for brand designers to research, explore, organize, experiment, develop brand directions, and receive client approvals.</strong></p>
 </div>
 
-<img width="100%" alt="AGIX — The Creative Workspace for Brand Designers" src="./img/agix-banner.jpg" />
-
 ## Overview
 
 **AGIX** is not a replacement for Figma. It is the intelligent workspace that exists **before Figma** — where brand designers gather raw inspiration, extract visual DNA, query project context, battle-test competing directions, verify brand coherence, preview designs across tangible real-world mockups, and secure client sign-off.
