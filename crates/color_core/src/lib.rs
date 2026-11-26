@@ -4,10 +4,14 @@
 pub mod oklch;
 pub mod apca;
 pub mod harmony;
+pub mod gamut_p3;
+pub mod palette_optimizer;
 
 pub use oklch::{Oklch, RgbColor, srgb_to_oklch, oklch_to_srgb};
 pub use apca::calculate_apca;
 pub use harmony::{generate_harmony_palette, HarmonyType};
+pub use gamut_p3::{fit_to_gamut, ColorGamut};
+pub use palette_optimizer::generate_11_stop_scale;
 
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;

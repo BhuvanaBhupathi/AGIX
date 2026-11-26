@@ -1,9 +1,27 @@
-# GitHub Linguist language detection overrides
+# GitHub Linguist Language Configuration
+# Ensure balanced polyglot representation across Python, Rust, Go, and TypeScript
+
+# Exclude generated/template canvas assets from language stats
+src/canvas/* linguist-vendored=true
+src/lib/inspiration/* linguist-vendored=true
+
+# Explicit language detection
 *.py linguist-detectable=true
+*.py linguist-language=Python
 *.rs linguist-detectable=true
+*.rs linguist-language=Rust
 *.go linguist-detectable=true
+*.go linguist-language=Go
 *.ts linguist-detectable=true
 *.tsx linguist-detectable=true
 
-# Ensure line endings are consistent
+# Force repository directory mappings
+services/ai_engine/** linguist-detectable=true
+services/ai_engine/** linguist-language=Python
+crates/color_core/** linguist-detectable=true
+crates/color_core/** linguist-language=Rust
+services/collab_server/** linguist-detectable=true
+services/collab_server/** linguist-language=Go
+
+# Line endings
 * text=auto eol=lf
