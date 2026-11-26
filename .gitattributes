@@ -1,0 +1,9 @@
+# GitHub Linguist language detection overrides
+*.py linguist-detectable=true
+*.rs linguist-detectable=true
+*.go linguist-detectable=true
+*.ts linguist-detectable=true
+*.tsx linguist-detectable=true
+
+# Ensure line endings are consistent
+* text=auto eol=lf

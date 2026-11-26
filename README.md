@@ -215,13 +215,16 @@ This allows external discovery sources to plug into AGIX without modifying the c
 
 ---
 
-## Technical Stack
+## Technical Stack & Polyglot Architecture
 
-- **Framework**: Next.js 15 (App Router)
-- **Frontend**: React 19, TypeScript
-- **Styling**: Tailwind CSS 3.4
-- **Icons**: Lucide React
+AGIX combines specialized languages optimized for each layer of the design intelligence lifecycle:
+
+- **Frontend & Visual Studio**: **TypeScript** (Next.js 15, React 19, Tailwind CSS, HTML5 Canvas)
+- **AI & Visual DNA Services**: **Python** (FastAPI, NumPy, Pillow, Scikit-Learn K-Means quantization)
+- **High-Performance Color Core**: **Rust** (OKLCH color space transforms, Display-P3 gamut clipping, APCA-W3 contrast)
+- **Real-Time Collaboration Daemon**: **Go** (High-concurrency WebSocket hub, live room pooling, client review tokens)
 - **Typography**: Satoshi (Fontshare), Instrument Serif, JetBrains Mono
+- **Database / State**: SQLite via Prisma ORM + in-memory state sync
 
 ---
 
