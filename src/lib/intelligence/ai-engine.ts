@@ -298,13 +298,15 @@ export async function generateVisualDNA(project: BrandProject): Promise<VisualDN
 
 export async function queryBoard(
   project: BrandProject,
-  history: BoardChatMessage[],
-  userQuery: string
+  arg2: any,
+  arg3?: any
 ): Promise<BoardChatMessage> {
-  const q = userQuery.trim().toLowerCase();
-  const canvas = project.canvasObjects || [];
-  const palette = project.visualPreview?.palette || ["#191918", "#8B5CF6", "#38BDF8"];
-  const brandBrain = project.brandBrain;
+  const userQuery: string = typeof arg2 === "string" ? arg2 : (typeof arg3 === "string" ? arg3 : "");
+  const history: BoardChatMessage[] = Array.isArray(arg2) ? arg2 : (Array.isArray(arg3) ? arg3 : []);
+  const q = (userQuery || "").trim().toLowerCase();
+  const canvas = project?.canvasObjects || [];
+  const palette = project?.visualPreview?.palette || ["#191918", "#8B5CF6", "#38BDF8"];
+  const brandBrain = project?.brandBrain;
   const references = canvas.filter((i) => i.type === "image" || i.type === "reference");
 
   const referencedAssets: BoardChatMessage["referencedAssets"] = [];
@@ -313,7 +315,21 @@ export async function queryBoard(
   let answerText = "";
   let suggestedFollowUps: string[] = [];
 
-  if (q.includes("color") || q.includes("palette") || q.includes("frequent")) {
+  if (q === "hi" || q === "hello" || q === "hey" || q.startsWith("hi ") || q.startsWith("hello ")) {
+    answerText = `Hello! I'm **Nebula**, your cognitive creative partner connected to **${project.name}**.\n\n` +
+      `I have real-time access to your workspace:\n` +
+      `• **${references.length}** inspiration references\n` +
+      `• **${canvas.length}** active canvas objects\n` +
+      `• Dominant palette: **${palette.slice(0, 4).join(", ")}**\n\n` +
+      `How can I assist your creative direction today? You can ask me to audit colors, match typography, or check brand consistency.`;
+
+    suggestedFollowUps = [
+      "What colors appear most frequently in my references?",
+      "Which fonts match this brand personality?",
+      "Find inconsistencies in my current direction",
+      "Suggest three alternative branding directions",
+    ];
+  } else if (q.includes("color") || q.includes("palette") || q.includes("frequent")) {
     const dominantColors = palette.map((c) => `${c} (${getColorName(c)})`).join(", ");
     answerText = `Based on your board's **${canvas.length} canvas assets** and active palette, the most prominent color signatures are:\n\n` +
       `1. **${palette[0]}** — Dominant base ground (${getColorName(palette[0])})\n` +

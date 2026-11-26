@@ -94,8 +94,8 @@ export default function AskBoardPage() {
     try {
       const aiResponse = await queryBoard(
         selectedProject,
-        textToSend,
-        messages.slice(-6)
+        messages.slice(-6),
+        textToSend
       );
       const finalMessages = [...updated, aiResponse];
       setMessages(finalMessages);
