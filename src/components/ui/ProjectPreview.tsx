@@ -34,12 +34,12 @@ export function ProjectPreview({ project, onClick, onDelete }: ProjectPreviewPro
 
   return (
     <div className="group relative rounded-[24px] border border-border-subtle bg-surface p-4 transition-all duration-300 hover:border-[#8B5CF6]/50 hover:shadow-[0_12px_32px_rgba(139,92,246,0.14)] hover:-translate-y-1 flex flex-col justify-between">
+      {/* Visual Composition / Thumbnail */}
       <Link
         href={`/project/${project.id}`}
         onClick={onClick}
         className="block cursor-pointer"
       >
-        {/* Visual Composition / Thumbnail */}
         <div className="relative aspect-[16/10] w-full rounded-[18px] bg-surface-subtle dark:bg-[#131626] p-5 border border-border-subtle flex flex-col justify-between overflow-hidden transition-colors">
           <div className="flex items-center justify-between">
             <span className="font-mono text-[10px] text-ink-tertiary dark:text-slate-400 uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/70 dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.05]">
@@ -69,38 +69,47 @@ export function ProjectPreview({ project, onClick, onDelete }: ProjectPreviewPro
             ))}
           </div>
         </div>
-
-        {/* Meta info */}
-        <div className="mt-4 flex items-start justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <h4 className="text-sm font-semibold tracking-tight text-ink group-hover:text-[#6D28D9] dark:group-hover:text-[#C4B5FD] transition-colors font-sans">
-                {project.name}
-              </h4>
-              <span className="text-[11px] text-ink-tertiary">•</span>
-              <span className="text-xs text-ink-secondary dark:text-slate-400 font-mono text-[11px]">{project.type}</span>
-            </div>
-            <p className="mt-0.5 text-xs text-ink-tertiary dark:text-slate-400 font-mono text-[11px]">
-              {project.client} • {project.lastEdited}
-            </p>
-          </div>
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-            <ArrowUpRight size={14} className="text-ink dark:text-white" />
-          </div>
-        </div>
       </Link>
 
-      {/* Delete button (quiet hover action, placed at bottom right of card so it never overlaps the monogram) */}
-      {onDelete && (
-        <button
-          type="button"
-          onClick={handleDeleteClick}
-          title={`Delete ${project.name}`}
-          className="absolute bottom-4 right-4 z-20 opacity-0 group-hover:opacity-100 p-1.5 rounded-full bg-surface/90 dark:bg-[#1A1D2E] hover:bg-red-50 dark:hover:bg-red-950/50 text-ink-tertiary hover:text-red-600 dark:hover:text-red-400 border border-border-subtle hover:border-red-200 dark:hover:border-red-500/30 transition-all shadow-subtle cursor-pointer"
+      {/* Meta info & Action Controls (clean layout, zero monogram collisions) */}
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <Link
+          href={`/project/${project.id}`}
+          onClick={onClick}
+          className="min-w-0 flex-1 block cursor-pointer"
         >
-          <Trash2 size={13} />
-        </button>
-      )}
+          <div className="flex items-center gap-2">
+            <h4 className="text-sm font-semibold tracking-tight text-ink group-hover:text-[#6D28D9] dark:group-hover:text-[#C4B5FD] transition-colors font-sans truncate">
+              {project.name}
+            </h4>
+            <span className="text-[11px] text-ink-tertiary">•</span>
+            <span className="text-xs text-ink-secondary dark:text-slate-400 font-mono text-[11px] shrink-0">{project.type}</span>
+          </div>
+          <p className="mt-0.5 text-xs text-ink-tertiary dark:text-slate-400 font-mono text-[11px] truncate">
+            {project.client} • {project.lastEdited}
+          </p>
+        </Link>
+
+        <div className="flex items-center gap-1 shrink-0">
+          {onDelete && (
+            <button
+              type="button"
+              onClick={handleDeleteClick}
+              title={`Delete ${project.name}`}
+              className="opacity-0 group-hover:opacity-100 p-1.5 rounded-full hover:bg-red-50 dark:hover:bg-red-950/50 text-ink-tertiary hover:text-red-600 dark:hover:text-red-400 border border-transparent hover:border-red-200 dark:hover:border-red-500/30 transition-all cursor-pointer"
+            >
+              <Trash2 size={13} />
+            </button>
+          )}
+          <Link
+            href={`/project/${project.id}`}
+            onClick={onClick}
+            className="p-1.5 text-ink-tertiary group-hover:text-ink dark:group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+          >
+            <ArrowUpRight size={14} />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

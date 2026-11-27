@@ -34,7 +34,7 @@ interface DirectionConcept {
   textSecondary: string;
 }
 
-export function DirectionClashView() {
+function DirectionClashView() {
   const { projects } = useProjects();
   const [activeTab, setActiveTab] = useState<"gallery" | "overview" | "brand" | "assets">("gallery");
   const [selectedConceptId, setSelectedConceptId] = useState<string>("01");

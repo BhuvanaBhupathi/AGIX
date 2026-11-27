@@ -63,11 +63,8 @@ export default function ClientApprovalPage() {
     try {
       const share = createReviewShare({
         projectId: selectedProject.id,
-        directionIds: ["dir-1", "dir-2"],
-        accessLevel: "comment",
-        allowComments: true,
-        allowApprovals: true,
-        allowExport: false,
+        directionId: "dir-1",
+        accessLevel: "COMMENT",
       });
 
       setLinkSuccessMsg(`Created secure client review link! Token: ${share.token}`);
@@ -93,7 +90,7 @@ export default function ClientApprovalPage() {
       id: "dir-1",
       name: "Direction A · Monolithic Obsidian",
       description: "Severe architectural typography with deep charcoal fields and luminous ultraviolet beacons.",
-      palette: [selectedProject?.colors?.[0] || "#8B5CF6", "#08090E", "#38BDF8", "#F8FAFC"],
+      palette: [selectedProject?.visualPreview?.palette?.[0] || "#8B5CF6", "#08090E", "#38BDF8", "#F8FAFC"],
       fonts: { heading: "Satoshi Display", body: "Plus Jakarta Sans" },
       status: "Approved",
       feedbackCount: 3,
