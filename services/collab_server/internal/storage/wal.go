@@ -26,6 +26,7 @@ type LogEntry struct {
 	Type      RecordType  `json:"type"`
 	RoomID    string      `json:"room_id"`
 	Timestamp int64       `json:"timestamp"`
+	
 	Payload   interface{} `json:"payload"`
 }
 
