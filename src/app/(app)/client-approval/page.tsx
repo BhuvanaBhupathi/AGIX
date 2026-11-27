@@ -45,6 +45,13 @@ export default function ClientApprovalPage() {
   const [selectedDirection, setSelectedDirection] = useState<string>("dir-1");
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);
   const [linkSuccessMsg, setLinkSuccessMsg] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [origin, setOrigin] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+    setOrigin(window.location.origin);
+  }, []);
 
   useEffect(() => {
     if (projects.length > 0 && !selectedProject) {
@@ -77,8 +84,8 @@ export default function ClientApprovalPage() {
   };
 
   const handleCopyLink = (token: string) => {
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
-    const fullUrl = `${origin}/client/${token}/review`;
+    const currentOrigin = origin || (typeof window !== "undefined" ? window.location.origin : "");
+    const fullUrl = `${currentOrigin}/client/${token}/review`;
     navigator.clipboard.writeText(fullUrl);
     setCopiedToken(token);
     setTimeout(() => setCopiedToken(null), 2500);
@@ -266,9 +273,12 @@ export default function ClientApprovalPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <div className="w-full flex-1 px-4 py-2.5 rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-stone-50 dark:bg-[#131520] font-mono text-xs text-ink truncate">
-              {typeof window !== "undefined"
-                ? `${window.location.origin}/client/${primaryToken}/review`
+            <div
+              suppressHydrationWarning
+              className="w-full flex-1 px-4 py-2.5 rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-stone-50 dark:bg-[#131520] font-mono text-xs text-ink truncate select-all"
+            >
+              {mounted && origin
+                ? `${origin}/client/${primaryToken}/review`
                 : `/client/${primaryToken}/review`}
             </div>
             <button
