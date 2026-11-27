@@ -41,3 +41,7 @@ next-env.d.ts
 # internal tools
 .qwen
 
+
+# Python bytecode
+__pycache__/
+*.pyc
